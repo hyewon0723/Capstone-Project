@@ -123,15 +123,12 @@ public class Flag implements Parcelable {
 
     public static final Parcelable.Creator<Flag> CREATOR = new Creator<Flag>() {
         public Flag createFromParcel(Parcel source) {
-            Flag movie = new Flag();
-            movie.mId = source.readLong();
-            movie.mTitle = source.readString();
-            movie.mFlag = source.readString();
-            movie.mOverview = source.readString();
-            movie.mUserRating = source.readString();
-            movie.mReleaseDate = source.readString();
-            movie.mBackdrop = source.readString();
-            return movie;
+            Flag flag = new Flag();
+            flag.mId = source.readLong();
+            flag.mTitle = source.readString();
+            flag.mFlag = source.readString();
+            flag.mBackdrop = source.readString();
+            return flag;
         }
 
         public Flag[] newArray(int size) {

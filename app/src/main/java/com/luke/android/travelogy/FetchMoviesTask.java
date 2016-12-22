@@ -103,7 +103,6 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, List<Flag>> {
                 .baseUrl("http://api.themoviedb.org/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         FlagDatabaseService service = retrofit.create(FlagDatabaseService.class);
         Call<Flags> call = service.discoverMovies(mSortBy,
                 BuildConfig.THE_MOVIE_DATABASE_API_KEY);

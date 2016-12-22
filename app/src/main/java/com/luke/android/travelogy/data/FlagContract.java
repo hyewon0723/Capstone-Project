@@ -11,7 +11,7 @@ public class FlagContract {
 
     public static final String CONTENT_AUTHORITY = "com.luke.android.travelogy";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-    public static final String PATH_FLAG = "movie";
+    public static final String PATH_FLAG = "flag";
 
     public static final class FlagEntry implements BaseColumns {
 

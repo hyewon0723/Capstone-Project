@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class FlagDBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 3;
-    private static final String DATABASE_NAME = "movies.db";
+    private static final String DATABASE_NAME = "flags.db";
 
     public FlagDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
