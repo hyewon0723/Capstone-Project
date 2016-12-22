@@ -97,7 +97,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="e47139a0ce076b063204f71d5ae624ea90e8fc81">
+        sha1="7ea27bec5cdc4e141bdf76d776f538835c41976f">
         <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_4becd96959311834739a55ebd5023115a1837fa4/classes.dex" />
     </item>
     <item
@@ -187,7 +187,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="473685a19863c9d4f76992371c2b65922fd474e7">
+        sha1="ef70f3d7802128c482f0fd70ffe0bd8486521cb4">
         <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_db3a3c289426fadeea66c5c3e73e19f950612a58/classes.dex" />
     </item>
     <item

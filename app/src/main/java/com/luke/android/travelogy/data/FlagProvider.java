@@ -14,13 +14,13 @@ import android.support.annotation.Nullable;
 public class FlagProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
-    static final int MOVIES = 300;
+    static final int FLAGS = 300;
     private FlagDBHelper mOpenHelper;
 
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = FlagContract.CONTENT_AUTHORITY;
-        matcher.addURI(authority, FlagContract.PATH_FLAG, MOVIES);
+        matcher.addURI(authority, FlagContract.PATH_FLAG, FLAGS);
         return matcher;
     }
 
@@ -36,9 +36,9 @@ public class FlagProvider extends ContentProvider {
                         String sortOrder) {
         Cursor cursor;
         switch (sUriMatcher.match(uri)) {
-            case MOVIES: {
+            case FLAGS: {
                 cursor = mOpenHelper.getReadableDatabase().query(
-                        FlagContract.MovieEntry.TABLE_NAME,
+                        FlagContract.FlagEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -62,8 +62,8 @@ public class FlagProvider extends ContentProvider {
     public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
         switch (match) {
-            case MOVIES:
-                return FlagContract.MovieEntry.CONTENT_TYPE;
+            case FLAGS:
+                return FlagContract.FlagEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -76,10 +76,10 @@ public class FlagProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         Uri returnUri;
         switch (match) {
-            case MOVIES: {
-                long id = db.insert(FlagContract.MovieEntry.TABLE_NAME, null, values);
+            case FLAGS: {
+                long id = db.insert(FlagContract.FlagEntry.TABLE_NAME, null, values);
                 if (id > 0) {
-                    returnUri = FlagContract.MovieEntry.buildMovieUri(id);
+                    returnUri = FlagContract.FlagEntry.buildFlagUri(id);
                 } else {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 }
@@ -104,9 +104,9 @@ public class FlagProvider extends ContentProvider {
             selection = "1";
         }
         switch (match) {
-            case MOVIES:
+            case FLAGS:
                 rowsDeleted = db.delete(
-                        FlagContract.MovieEntry.TABLE_NAME, selection, selectionArgs);
+                        FlagContract.FlagEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -125,8 +125,8 @@ public class FlagProvider extends ContentProvider {
         int rowsUpdated;
 
         switch (match) {
-            case MOVIES:
-                rowsUpdated = db.update(FlagContract.MovieEntry.TABLE_NAME, values, selection,
+            case FLAGS:
+                rowsUpdated = db.update(FlagContract.FlagEntry.TABLE_NAME, values, selection,
                         selectionArgs);
                 break;
             default:

@@ -110,7 +110,7 @@ public class FetchMoviesTask extends AsyncTask<Void, Void, List<Flag>> {
         try {
             Response<Flags> response = call.execute();
             Flags movies = response.body();
-            return movies.getMovies();
+            return movies.getFlags();
 
         } catch (IOException e) {
             Log.e(LOG_TAG, "A problem occurred talking to the movie db ", e);

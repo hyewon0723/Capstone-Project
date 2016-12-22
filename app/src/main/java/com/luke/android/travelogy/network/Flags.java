@@ -10,10 +10,10 @@ import java.util.List;
 public class Flags {
 
     @SerializedName("results")
-    private List<Flag> movies = new ArrayList<>();
+    private List<Flag> flags = new ArrayList<>();
 
-    public List<Flag> getMovies() {
-        return movies;
+    public List<Flag> getFlags() {
+        return flags;
     }
 }
 

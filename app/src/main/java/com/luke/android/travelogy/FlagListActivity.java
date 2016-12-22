@@ -288,8 +288,8 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         findViewById(R.id.progress).setVisibility(View.VISIBLE);
         return new CursorLoader(this,
-                FlagContract.MovieEntry.CONTENT_URI,
-                FlagContract.MovieEntry.MOVIE_COLUMNS,
+                FlagContract.FlagEntry.CONTENT_URI,
+                FlagContract.FlagEntry.MOVIE_COLUMNS,
                 null,
                 null,
                 null);

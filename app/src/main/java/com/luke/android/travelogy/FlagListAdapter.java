@@ -29,15 +29,15 @@ public class FlagListAdapter
     @SuppressWarnings("unused")
     private final static String LOG_TAG = FlagListAdapter.class.getSimpleName();
 
-    private final ArrayList<Flag> mMovies;
+    private final ArrayList<Flag> mFlags;
     private final Callbacks mCallbacks;
 
     public interface Callbacks {
         void open(Flag movie, int position);
     }
 
-    public FlagListAdapter(ArrayList<Flag> movies, Callbacks callbacks) {
-        mMovies = movies;
+    public FlagListAdapter(ArrayList<Flag> flags, Callbacks callbacks) {
+        mFlags = flags;
         this.mCallbacks = callbacks;
     }
 
@@ -64,10 +64,10 @@ public class FlagListAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Flag movie = mMovies.get(position);
+        final Flag movie = mFlags.get(position);
         final Context context = holder.mView.getContext();
 
-        holder.mMovie = movie;
+        holder.mFlag = movie;
         holder.mTitleView.setText(movie.getTitle());
 
         String posterUrl = movie.getPosterUrl(context);
@@ -84,7 +84,7 @@ public class FlagListAdapter
                         new Callback() {
                             @Override
                             public void onSuccess() {
-                                if (holder.mMovie.getId() != movie.getId()) {
+                                if (holder.mFlag.getId() != movie.getId()) {
                                     holder.cleanUp();
                                 } else {
                                     holder.mThumbnailView.setVisibility(View.VISIBLE);
@@ -108,7 +108,7 @@ public class FlagListAdapter
 
     @Override
     public int getItemCount() {
-        return mMovies.size();
+        return mFlags.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -117,7 +117,7 @@ public class FlagListAdapter
         ImageView mThumbnailView;
         @Bind(R.id.title)
         TextView mTitleView;
-        public Flag mMovie;
+        public Flag mFlag;
 
         public ViewHolder(View view) {
             super(view);
@@ -136,27 +136,27 @@ public class FlagListAdapter
     }
 
     public void add(List<Flag> movies) {
-        mMovies.clear();
-        mMovies.addAll(movies);
+        mFlags.clear();
+        mFlags.addAll(movies);
         notifyDataSetChanged();
     }
 
     public void add(Cursor cursor) {
-        mMovies.clear();
+        mFlags.clear();
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                long id = cursor.getLong(FlagContract.MovieEntry.COL_FLAG_ID);
-                String title = cursor.getString(FlagContract.MovieEntry.COL_FLAG_TITLE);
-                String posterPath = cursor.getString(FlagContract.MovieEntry.COL_FLAG_POSTER_PATH);
-                String backdropPath = cursor.getString(FlagContract.MovieEntry.COL_FLAG_BACKDROP_PATH);
+                long id = cursor.getLong(FlagContract.FlagEntry.COL_FLAG_ID);
+                String title = cursor.getString(FlagContract.FlagEntry.COL_FLAG_TITLE);
+                String posterPath = cursor.getString(FlagContract.FlagEntry.COL_FLAG_POSTER_PATH);
+                String backdropPath = cursor.getString(FlagContract.FlagEntry.COL_FLAG_BACKDROP_PATH);
                 Flag movie = new Flag(id, title, posterPath, backdropPath);
-                mMovies.add(movie);
+                mFlags.add(movie);
             } while (cursor.moveToNext());
         }
         notifyDataSetChanged();
     }
 
     public ArrayList<Flag> getMovies() {
-        return mMovies;
+        return mFlags;
     }
 }
