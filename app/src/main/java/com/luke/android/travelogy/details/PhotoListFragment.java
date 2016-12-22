@@ -245,12 +245,6 @@ public class PhotoListFragment extends Fragment implements FetchTrailersTask.Lis
                             mMovie.getTitle());
                     movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_POSTER_PATH,
                             mMovie.getPoster());
-                    movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_OVERVIEW,
-                            mMovie.getOverview());
-                    movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_VOTE_AVERAGE,
-                            mMovie.getUserRating());
-                    movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_RELEASE_DATE,
-                            mMovie.getReleaseDate());
                     movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_BACKDROP_PATH,
                             mMovie.getBackdrop());
                     getContext().getContentResolver().insert(

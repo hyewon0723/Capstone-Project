@@ -148,11 +148,8 @@ public class FlagListAdapter
                 long id = cursor.getLong(FlagContract.MovieEntry.COL_MOVIE_ID);
                 String title = cursor.getString(FlagContract.MovieEntry.COL_MOVIE_TITLE);
                 String posterPath = cursor.getString(FlagContract.MovieEntry.COL_MOVIE_POSTER_PATH);
-                String overview = cursor.getString(FlagContract.MovieEntry.COL_MOVIE_OVERVIEW);
-                String rating = cursor.getString(FlagContract.MovieEntry.COL_MOVIE_VOTE_AVERAGE);
-                String releaseDate = cursor.getString(FlagContract.MovieEntry.COL_MOVIE_RELEASE_DATE);
                 String backdropPath = cursor.getString(FlagContract.MovieEntry.COL_MOVIE_BACKDROP_PATH);
-                Flag movie = new Flag(id, title, posterPath, overview, rating, releaseDate, backdropPath);
+                Flag movie = new Flag(id, title, posterPath, backdropPath);
                 mMovies.add(movie);
             } while (cursor.moveToNext());
         }

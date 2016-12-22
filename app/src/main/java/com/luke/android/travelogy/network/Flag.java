@@ -40,14 +40,10 @@ public class Flag implements Parcelable {
     private Flag() {
     }
 
-    public Flag(long id, String title, String flag, String overview, String userRating,
-                String releaseDate, String backdrop) {
+    public Flag(long id, String title, String flag, String backdrop) {
         mId = id;
         mTitle = title;
         mFlag = flag;
-        mOverview = overview;
-        mUserRating = userRating;
-        mReleaseDate = releaseDate;
         mBackdrop = backdrop;
     }
 

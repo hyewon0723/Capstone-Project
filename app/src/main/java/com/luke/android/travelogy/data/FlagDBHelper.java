@@ -26,9 +26,6 @@ public class FlagDBHelper extends SQLiteOpenHelper {
                 FlagContract.MovieEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
                 FlagContract.MovieEntry.COLUMN_MOVIE_TITLE + " TEXT NOT NULL, " +
                 FlagContract.MovieEntry.COLUMN_MOVIE_POSTER_PATH + " TEXT NOT NULL, " +
-                FlagContract.MovieEntry.COLUMN_MOVIE_OVERVIEW + " TEXT NOT NULL, " +
-                FlagContract.MovieEntry.COLUMN_MOVIE_VOTE_AVERAGE + " TEXT NOT NULL, " +
-                FlagContract.MovieEntry.COLUMN_MOVIE_RELEASE_DATE + " TEXT NOT NULL, " +
                 FlagContract.MovieEntry.COLUMN_MOVIE_BACKDROP_PATH + " TEXT NOT NULL " +
                 " );";
         sqLiteDatabase.execSQL(SQL_CREATE_MOVIES_TABLE);
