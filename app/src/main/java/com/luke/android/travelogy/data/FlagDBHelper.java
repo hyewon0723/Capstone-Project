@@ -23,10 +23,10 @@ public class FlagDBHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_MOVIES_TABLE = "CREATE TABLE " + FlagContract.MovieEntry.TABLE_NAME
                 + " (" +
                 FlagContract.MovieEntry._ID + " INTEGER PRIMARY KEY," +
-                FlagContract.MovieEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
-                FlagContract.MovieEntry.COLUMN_MOVIE_TITLE + " TEXT NOT NULL, " +
-                FlagContract.MovieEntry.COLUMN_MOVIE_POSTER_PATH + " TEXT NOT NULL, " +
-                FlagContract.MovieEntry.COLUMN_MOVIE_BACKDROP_PATH + " TEXT NOT NULL " +
+                FlagContract.MovieEntry.COLUMN_FLAG_ID + " INTEGER NOT NULL, " +
+                FlagContract.MovieEntry.COLUMN_FLAG_TITLE + " TEXT NOT NULL, " +
+                FlagContract.MovieEntry.COLUMN_FLAG_POSTER_PATH + " TEXT NOT NULL, " +
+                FlagContract.MovieEntry.COLUMN_FLAG_BACKDROP_PATH + " TEXT NOT NULL " +
                 " );";
         sqLiteDatabase.execSQL(SQL_CREATE_MOVIES_TABLE);
     }

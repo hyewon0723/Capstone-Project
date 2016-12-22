@@ -20,7 +20,7 @@ public class FlagProvider extends ContentProvider {
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = FlagContract.CONTENT_AUTHORITY;
-        matcher.addURI(authority, FlagContract.PATH_MOVIE, MOVIES);
+        matcher.addURI(authority, FlagContract.PATH_FLAG, MOVIES);
         return matcher;
     }
 

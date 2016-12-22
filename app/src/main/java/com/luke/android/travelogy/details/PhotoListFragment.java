@@ -239,13 +239,13 @@ public class PhotoListFragment extends Fragment implements FetchTrailersTask.Lis
             protected Void doInBackground(Void... params) {
                 if (!isFavorite()) {
                     ContentValues movieValues = new ContentValues();
-                    movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_ID,
+                    movieValues.put(FlagContract.MovieEntry.COLUMN_FLAG_ID,
                             mMovie.getId());
-                    movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_TITLE,
+                    movieValues.put(FlagContract.MovieEntry.COLUMN_FLAG_TITLE,
                             mMovie.getTitle());
-                    movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_POSTER_PATH,
+                    movieValues.put(FlagContract.MovieEntry.COLUMN_FLAG_POSTER_PATH,
                             mMovie.getPoster());
-                    movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_BACKDROP_PATH,
+                    movieValues.put(FlagContract.MovieEntry.COLUMN_FLAG_BACKDROP_PATH,
                             mMovie.getBackdrop());
                     getContext().getContentResolver().insert(
                             FlagContract.MovieEntry.CONTENT_URI,
@@ -269,7 +269,7 @@ public class PhotoListFragment extends Fragment implements FetchTrailersTask.Lis
             protected Void doInBackground(Void... params) {
                 if (isFavorite()) {
                     getContext().getContentResolver().delete(FlagContract.MovieEntry.CONTENT_URI,
-                            FlagContract.MovieEntry.COLUMN_MOVIE_ID + " = " + mMovie.getId(), null);
+                            FlagContract.MovieEntry.COLUMN_FLAG_ID + " = " + mMovie.getId(), null);
 
                 }
                 return null;
@@ -358,8 +358,8 @@ public class PhotoListFragment extends Fragment implements FetchTrailersTask.Lis
     private boolean isFavorite() {
         Cursor movieCursor = getContext().getContentResolver().query(
                 FlagContract.MovieEntry.CONTENT_URI,
-                new String[]{FlagContract.MovieEntry.COLUMN_MOVIE_ID},
-                FlagContract.MovieEntry.COLUMN_MOVIE_ID + " = " + mMovie.getId(),
+                new String[]{FlagContract.MovieEntry.COLUMN_FLAG_ID},
+                FlagContract.MovieEntry.COLUMN_FLAG_ID + " = " + mMovie.getId(),
                 null,
                 null);
 

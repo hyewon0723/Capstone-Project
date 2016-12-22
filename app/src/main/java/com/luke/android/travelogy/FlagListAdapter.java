@@ -145,10 +145,10 @@ public class FlagListAdapter
         mMovies.clear();
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                long id = cursor.getLong(FlagContract.MovieEntry.COL_MOVIE_ID);
-                String title = cursor.getString(FlagContract.MovieEntry.COL_MOVIE_TITLE);
-                String posterPath = cursor.getString(FlagContract.MovieEntry.COL_MOVIE_POSTER_PATH);
-                String backdropPath = cursor.getString(FlagContract.MovieEntry.COL_MOVIE_BACKDROP_PATH);
+                long id = cursor.getLong(FlagContract.MovieEntry.COL_FLAG_ID);
+                String title = cursor.getString(FlagContract.MovieEntry.COL_FLAG_TITLE);
+                String posterPath = cursor.getString(FlagContract.MovieEntry.COL_FLAG_POSTER_PATH);
+                String backdropPath = cursor.getString(FlagContract.MovieEntry.COL_FLAG_BACKDROP_PATH);
                 Flag movie = new Flag(id, title, posterPath, backdropPath);
                 mMovies.add(movie);
             } while (cursor.moveToNext());

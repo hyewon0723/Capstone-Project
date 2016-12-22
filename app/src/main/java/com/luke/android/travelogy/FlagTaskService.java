@@ -107,13 +107,13 @@ public class FlagTaskService extends GcmTaskService {
                 Log.v("Luke", "FlagTaskService #### countryCode.getString(\"alpha2Code\")  "+countryCode.getString("alpha2Code"));
 
                 ContentValues movieValues = new ContentValues();
-                movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_ID,
+                movieValues.put(FlagContract.MovieEntry.COLUMN_FLAG_ID,
                         0);
-                movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_TITLE,
+                movieValues.put(FlagContract.MovieEntry.COLUMN_FLAG_TITLE,
                         countryCode.getString("name"));
-                movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_POSTER_PATH,
+                movieValues.put(FlagContract.MovieEntry.COLUMN_FLAG_POSTER_PATH,
                         countryCode.getString("alpha2Code"));
-                movieValues.put(FlagContract.MovieEntry.COLUMN_MOVIE_BACKDROP_PATH,
+                movieValues.put(FlagContract.MovieEntry.COLUMN_FLAG_BACKDROP_PATH,
                         countryCode.getString("alpha2Code"));
                 mContext.getContentResolver().insert(
                         FlagContract.MovieEntry.CONTENT_URI,
