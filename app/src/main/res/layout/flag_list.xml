@@ -2,20 +2,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:name="com.dmitrymalkovich.android.popularmoviesapp.MovieListFragment"
+    android:name="com.luke.android.travelogy.FlagListActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.luke.android.travelogy.FlagListActivity">
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/movie_list"
+        android:id="@+id/flag_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:scrollbars="vertical"
         app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/flag_list_content" />
+        tools:listitem="@layout/flag_list_content"/>
 
 
 </FrameLayout>

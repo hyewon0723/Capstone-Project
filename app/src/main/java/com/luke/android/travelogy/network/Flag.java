@@ -45,6 +45,7 @@ public class Flag implements Parcelable {
         mTitle = title;
         mFlag = flag;
         mBackdrop = backdrop;
+        Log.v("Luke","Flag @@@@@@@@@@@@   initialization mBackdrop " +mBackdrop);
     }
 
     @Nullable
@@ -109,10 +110,21 @@ public class Flag implements Parcelable {
 
     @Nullable
     public String getBackdropUrl(Context context) {
-        if (mBackdrop != null && !mBackdrop.isEmpty()) {
-            return context.getResources().getString(R.string.url_for_downloading_backdrop) +
-                    mBackdrop;
+//        if (mBackdrop != null && !mBackdrop.isEmpty()) {
+//            return context.getResources().getString(R.string.url_for_downloading_backdrop) +
+//                    mBackdrop;
+//        }
+        Log.v("Luke","Flag @@@@@@@@@@@@   getBackdroprUrl mFlag " +mFlag);
+
+        if (mFlag != null && !mFlag.isEmpty()) {
+            //return context.getResources().getString(R.string.url_for_downloading_poster) + mFlag;
+            Log.v("Luke","Flag. getBackdroprUrl mFlag " +mFlag.toLowerCase());
+            //String url = "http://flags.fmcdn.net/data/flags/normal/us.png";
+            String url = "http://flags.fmcdn.net/data/flags/normal/"+mFlag.toLowerCase()+".png";
+            Log.v("Luke","Flag. getBackdroprUrl url " +url);
+            return url;
         }
+
         // Placeholder/Error/Title will be shown instead of a crash.
         return null;
     }

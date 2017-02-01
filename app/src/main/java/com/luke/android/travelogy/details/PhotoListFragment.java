@@ -2,117 +2,119 @@
 package com.luke.android.travelogy.details;
 
 import android.app.Activity;
-import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.AsyncTask;
+import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.luke.android.travelogy.FlagListActivity;
-import com.luke.android.travelogy.data.FlagContract;
-import com.luke.android.travelogy.network.Flag;
+import com.luke.android.travelogy.PhotoListAdapter;
 import com.luke.android.travelogy.R;
-import com.luke.android.travelogy.network.Review;
+import com.luke.android.travelogy.TravelogyIntentService;
+import com.luke.android.travelogy.data.TravelogyContract;
+import com.luke.android.travelogy.network.Flag;
+import com.luke.android.travelogy.network.Photo;
 import com.luke.android.travelogy.network.Trailer;
+import com.melnykov.fab.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * A fragment representing a single Flag detail screen.
- * This fragment is either contained in a {@link FlagListActivity}
- * in two-pane mode (on tablets) or a {@link PhotoListActivity}
- * on handsets.
- */
-public class PhotoListFragment extends Fragment implements FetchTrailersTask.Listener,
-        TrailerListAdapter.Callbacks, FetchReviewsTask.Listener, ReviewListAdapter.Callbacks {
+import static android.app.Activity.RESULT_OK;
 
-    @SuppressWarnings("unused")
+public class PhotoListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, PhotoListAdapter.Callbacks {
+
     public static final String LOG_TAG = PhotoListFragment.class.getSimpleName();
-    /**
-     * The fragment argument representing the movie that this fragment
-     * represents.
-     */
     public static final String ARG_MOVIE = "ARG_MOVIE";
     public static final String EXTRA_TRAILERS = "EXTRA_TRAILERS";
     public static final String EXTRA_REVIEWS = "EXTRA_REVIEWS";
+    private static final int PHOTO_LIST_LOADER = 0;
+    private int PICK_IMAGE_REQUEST = 1;
+    private Intent mServiceIntent;
+    private Activity activity;
 
     private Flag mMovie;
+    private final ArrayList<Location> mLocations;
     private TrailerListAdapter mTrailerListAdapter;
     private ReviewListAdapter mReviewListAdapter;
     private ShareActionProvider mShareActionProvider;
 
-    @Bind(R.id.trailer_list)
-    RecyclerView mRecyclerViewForTrailers;
-    @Bind(R.id.review_list)
-    RecyclerView mRecyclerViewForReviews;
+    @Bind(R.id.photo_list)
+    RecyclerView mRecyclerView;
+    private PhotoListAdapter mAdapter;
 
-    @Bind(R.id.movie_title)
-    TextView mMovieTitleView;
-    @Bind(R.id.movie_overview)
-    TextView mMovieOverviewView;
-    @Bind(R.id.movie_release_date)
-    TextView mMovieReleaseDateView;
-    @Bind(R.id.movie_user_rating)
-    TextView mMovieRatingView;
-    @Bind(R.id.movie_poster)
-    ImageView mMoviePosterView;
 
-    @Bind(R.id.button_watch_trailer)
-    Button mButtonWatchTrailer;
-    @Bind(R.id.button_mark_as_favorite)
-    Button mButtonMarkAsFavorite;
-    @Bind(R.id.button_remove_from_favorites)
-    Button mButtonRemoveFromFavorites;
-
-    @Bind({R.id.rating_first_star, R.id.rating_second_star, R.id.rating_third_star,
-            R.id.rating_fourth_star, R.id.rating_fifth_star})
-    List<ImageView> ratingStarViews;
+    DataPassListener mCallback;
+    public interface DataPassListener{
+        public void passData(ArrayList<Location> list);
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // Make sure that container activity implement the callback interface
+        try {
+            mCallback = (DataPassListener)context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement DataPassListener");
+        }
+    }
 
     public PhotoListFragment() {
+        mLocations = new ArrayList();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments().containsKey(ARG_MOVIE)) {
             mMovie = getArguments().getParcelable(ARG_MOVIE);
         }
         setHasOptionsMenu(true);
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Activity activity = getActivity();
+        activity = getActivity();
+        mServiceIntent = new Intent(activity, TravelogyIntentService.class);
+        getLoaderManager().initLoader(PHOTO_LIST_LOADER, null, this);
         CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout)
                 activity.findViewById(R.id.toolbar_layout);
         if (appBarLayout != null && activity instanceof PhotoListActivity) {
             appBarLayout.setTitle(mMovie.getTitle());
         }
+
+        appBarLayout.setExpandedTitleTextAppearance(R.style.ShadowTextStyle);
 
         ImageView movieBackdrop = ((ImageView) activity.findViewById(R.id.movie_backdrop));
         if (movieBackdrop != null) {
@@ -121,6 +123,44 @@ public class PhotoListFragment extends Fragment implements FetchTrailersTask.Lis
                     .config(Bitmap.Config.RGB_565)
                     .into(movieBackdrop);
         }
+
+        FloatingActionButton fab = (FloatingActionButton) activity.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Log.v("Luke", "PhotoListFragment fab!!!!!! ");
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Log.v("Luke", "PhotoListFragment onActivityResult!!!!!! ");
+            Uri uri = data.getData();
+
+            Log.v("Luke","PhotoListFragment onActivityResult!!!! country name: "+uri.toString());
+            mServiceIntent.putExtra("tag", "addPhoto");
+            mServiceIntent.putExtra("name", uri.toString());
+            activity.startService(mServiceIntent);
+
+//            try {
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+//                // Log.d(TAG, String.valueOf(bitmap));
+//
+//                ImageView imageView = (ImageView) findViewById(R.id.imageView);
+//                imageView.setImageBitmap(bitmap);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+        }
     }
 
     @Override
@@ -128,47 +168,53 @@ public class PhotoListFragment extends Fragment implements FetchTrailersTask.Lis
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.photo_detail, container, false);
         ButterKnife.bind(this, rootView);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        // To avoid "E/RecyclerView: No adapter attached; skipping layout"
+        mAdapter = new PhotoListAdapter(new ArrayList<Photo>(), this);
+        mRecyclerView.setAdapter(mAdapter);
 
-        mMovieTitleView.setText(mMovie.getTitle());
-        mMovieOverviewView.setText(mMovie.getOverview());
-        mMovieReleaseDateView.setText(mMovie.getReleaseDate(getContext()));
 
-        Picasso.with(getContext())
-                .load(mMovie.getPosterUrl(getContext()))
-                .config(Bitmap.Config.RGB_565)
-                .into(mMoviePosterView);
 
-        updateRatingBar();
-        updateFavoriteButtons();
+//        mMovieTitleView.setText(mMovie.getTitle());
+//        mMovieOverviewView.setText(mMovie.getOverview());
+//        mMovieReleaseDateView.setText(mMovie.getReleaseDate(getContext()));
+
+//        Picasso.with(getContext())
+//                .load(mMovie.getPosterUrl(getContext()))
+//                .config(Bitmap.Config.RGB_565)
+//                .into(mMoviePosterView);
+
+//        updateRatingBar();
+//        updateFavoriteButtons();
 
         // For horizontal list of trailers
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerViewForTrailers.setLayoutManager(layoutManager);
-        mTrailerListAdapter = new TrailerListAdapter(new ArrayList<Trailer>(), this);
-        mRecyclerViewForTrailers.setAdapter(mTrailerListAdapter);
-        mRecyclerViewForTrailers.setNestedScrollingEnabled(false);
+//        mRecyclerViewForTrailers.setLayoutManager(layoutManager);
+//        mTrailerListAdapter = new TrailerListAdapter(new ArrayList<Trailer>(), this);
+//        mRecyclerViewForTrailers.setAdapter(mTrailerListAdapter);
+//        mRecyclerViewForTrailers.setNestedScrollingEnabled(false);
+//
+//        // For vertical list of reviews
+//        mReviewListAdapter = new ReviewListAdapter(new ArrayList<Review>(), this);
+//        mRecyclerViewForReviews.setAdapter(mReviewListAdapter);
 
-        // For vertical list of reviews
-        mReviewListAdapter = new ReviewListAdapter(new ArrayList<Review>(), this);
-        mRecyclerViewForReviews.setAdapter(mReviewListAdapter);
-
-        // Fetch trailers only if savedInstanceState == null
-        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_TRAILERS)) {
-            List<Trailer> trailers = savedInstanceState.getParcelableArrayList(EXTRA_TRAILERS);
-            mTrailerListAdapter.add(trailers);
-            mButtonWatchTrailer.setEnabled(true);
-        } else {
-            fetchTrailers();
-        }
-
-        // Fetch reviews only if savedInstanceState == null
-        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_REVIEWS)) {
-            List<Review> reviews = savedInstanceState.getParcelableArrayList(EXTRA_REVIEWS);
-            mReviewListAdapter.add(reviews);
-        } else {
-            fetchReviews();
-        }
+//        // Fetch trailers only if savedInstanceState == null
+//        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_TRAILERS)) {
+//            List<Trailer> trailers = savedInstanceState.getParcelableArrayList(EXTRA_TRAILERS);
+//            mTrailerListAdapter.add(trailers);
+//            mButtonWatchTrailer.setEnabled(true);
+//        } else {
+//            fetchTrailers();
+//        }
+//
+//        // Fetch reviews only if savedInstanceState == null
+//        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_REVIEWS)) {
+//            List<Review> reviews = savedInstanceState.getParcelableArrayList(EXTRA_REVIEWS);
+//            mReviewListAdapter.add(reviews);
+//        } else {
+//            fetchReviews();
+//        }
 
         return rootView;
     }
@@ -176,199 +222,236 @@ public class PhotoListFragment extends Fragment implements FetchTrailersTask.Lis
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        ArrayList<Trailer> trailers = mTrailerListAdapter.getTrailers();
-        if (trailers != null && !trailers.isEmpty()) {
-            outState.putParcelableArrayList(EXTRA_TRAILERS, trailers);
-        }
-
-        ArrayList<Review> reviews = mReviewListAdapter.getReviews();
-        if (reviews != null && !reviews.isEmpty()) {
-            outState.putParcelableArrayList(EXTRA_REVIEWS, reviews);
-        }
+//        ArrayList<Trailer> trailers = mTrailerListAdapter.getTrailers();
+//        if (trailers != null && !trailers.isEmpty()) {
+//            outState.putParcelableArrayList(EXTRA_TRAILERS, trailers);
+//        }
+//
+//        ArrayList<Review> reviews = mReviewListAdapter.getReviews();
+//        if (reviews != null && !reviews.isEmpty()) {
+//            outState.putParcelableArrayList(EXTRA_REVIEWS, reviews);
+//        }
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.movie_detail_fragment, menu);
-        MenuItem shareTrailerMenuItem = menu.findItem(R.id.share_trailer);
-        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareTrailerMenuItem);
+        Log.v("Luke","PhotoListFragment ++++  onCreateOptionsMenu ");
+//        MenuItem shareTrailerMenuItem = menu.findItem(R.id.share_trailer);
+//        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareTrailerMenuItem);
     }
-
     @Override
-    public void watch(Trailer trailer, int position) {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getTrailerUrl())));
-    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected item.getItemId()  "+item.getItemId() );
+        Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected calling passData ");
+        ArrayList<Photo> photoList = new ArrayList();
+        photoList = mAdapter.getPhotos();
 
-    @Override
-    public void read(Review review, int position) {
-        startActivity(new Intent(Intent.ACTION_VIEW,
-                Uri.parse(review.getUrl())));
-    }
+        for (int i = 0 ; i < photoList.size(); ++i) {
 
-    @Override
-    public void onFetchFinished(List<Trailer> trailers) {
-        mTrailerListAdapter.add(trailers);
-        mButtonWatchTrailer.setEnabled(!trailers.isEmpty());
-
-        if (mTrailerListAdapter.getItemCount() > 0) {
-            Trailer trailer = mTrailerListAdapter.getTrailers().get(0);
-            updateShareActionProvider(trailer);
+            Uri uri = Uri.parse(photoList.get(i).getPoster());
+            Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected calling passData uri.getPath() "+uri.getPath());
+            String filePath = getRealPathFromURI(uri);
+            mLocations.add(readGeoTagImage(filePath));
+            Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected realfilePath "+filePath);
         }
+
+
+        mCallback.passData(mLocations);
+        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onReviewsFetchFinished(List<Review> reviews) {
-        mReviewListAdapter.add(reviews);
-    }
+//    @Override
+//    public void watch(Trailer trailer, int position) {
+//        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getTrailerUrl())));
+//    }
+//
+//    @Override
+//    public void read(Review review, int position) {
+//        startActivity(new Intent(Intent.ACTION_VIEW,
+//                Uri.parse(review.getUrl())));
+//    }
 
-    private void fetchTrailers() {
-        FetchTrailersTask task = new FetchTrailersTask(this);
-        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMovie.getId());
-    }
+//    @Override
+//    public void onFetchFinished(List<Trailer> trailers) {
+//        mTrailerListAdapter.add(trailers);
+//        mButtonWatchTrailer.setEnabled(!trailers.isEmpty());
 
-    private void fetchReviews() {
-        FetchReviewsTask task = new FetchReviewsTask(this);
-        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMovie.getId());
-    }
+//        if (mTrailerListAdapter.getItemCount() > 0) {
+//            Trailer trailer = mTrailerListAdapter.getTrailers().get(0);
+//            updateShareActionProvider(trailer);
+//        }
+//    }
 
-    public void markAsFavorite() {
+//    @Override
+//    public void onReviewsFetchFinished(List<Review> reviews) {
+//        mReviewListAdapter.add(reviews);
+//    }
 
-        new AsyncTask<Void, Void, Void>() {
+//    private void fetchTrailers() {
+//        FetchTrailersTask task = new FetchTrailersTask(this);
+//        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMovie.getId());
+//    }
+//
+//    private void fetchReviews() {
+//        FetchReviewsTask task = new FetchReviewsTask(this);
+//        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMovie.getId());
+//    }
 
-            @Override
-            protected Void doInBackground(Void... params) {
-                if (!isFavorite()) {
-                    ContentValues movieValues = new ContentValues();
-                    movieValues.put(FlagContract.FlagEntry.COLUMN_FLAG_ID,
-                            mMovie.getId());
-                    movieValues.put(FlagContract.FlagEntry.COLUMN_FLAG_TITLE,
-                            mMovie.getTitle());
-                    movieValues.put(FlagContract.FlagEntry.COLUMN_FLAG_POSTER_PATH,
-                            mMovie.getPoster());
-                    movieValues.put(FlagContract.FlagEntry.COLUMN_FLAG_BACKDROP_PATH,
-                            mMovie.getBackdrop());
-                    getContext().getContentResolver().insert(
-                            FlagContract.FlagEntry.CONTENT_URI,
-                            movieValues
-                    );
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                updateFavoriteButtons();
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    public void removeFromFavorites() {
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... params) {
-                if (isFavorite()) {
-                    getContext().getContentResolver().delete(FlagContract.FlagEntry.CONTENT_URI,
-                            FlagContract.FlagEntry.COLUMN_FLAG_ID + " = " + mMovie.getId(), null);
-
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                updateFavoriteButtons();
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
+//    public void markAsFavorite() {
+//
+//        new AsyncTask<Void, Void, Void>() {
+//
+//            @Override
+//            protected Void doInBackground(Void... params) {
+//                if (!isFavorite()) {
+//                    ContentValues movieValues = new ContentValues();
+//                    movieValues.put(TravelogyContract.FlagEntry.COLUMN_FLAG_ID,
+//                            mMovie.getId());
+//                    movieValues.put(TravelogyContract.FlagEntry.COLUMN_FLAG_TITLE,
+//                            mMovie.getTitle());
+//                    movieValues.put(TravelogyContract.FlagEntry.COLUMN_FLAG_POSTER_PATH,
+//                            mMovie.getPoster());
+//                    movieValues.put(TravelogyContract.FlagEntry.COLUMN_FLAG_BACKDROP_PATH,
+//                            mMovie.getBackdrop());
+//                    getContext().getContentResolver().insert(
+//                            TravelogyContract.FlagEntry.CONTENT_URI,
+//                            movieValues
+//                    );
+//                }
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Void aVoid) {
+//                updateFavoriteButtons();
+//            }
+//        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//    }
+//
+//    public void removeFromFavorites() {
+//        new AsyncTask<Void, Void, Void>() {
+//
+//            @Override
+//            protected Void doInBackground(Void... params) {
+//                if (isFavorite()) {
+//                    getContext().getContentResolver().delete(TravelogyContract.FlagEntry.CONTENT_URI,
+//                            TravelogyContract.FlagEntry.COLUMN_FLAG_ID + " = " + mMovie.getId(), null);
+//
+//                }
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Void aVoid) {
+//                updateFavoriteButtons();
+//            }
+//        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//    }
 
     private void updateRatingBar() {
-        if (mMovie.getUserRating() != null && !mMovie.getUserRating().isEmpty()) {
-            String userRatingStr = getResources().getString(R.string.user_rating_movie,
-                    mMovie.getUserRating());
-            mMovieRatingView.setText(userRatingStr);
-
-            float userRating = Float.valueOf(mMovie.getUserRating()) / 2;
-            int integerPart = (int) userRating;
-
-            // Fill stars
-            for (int i = 0; i < integerPart; i++) {
-                ratingStarViews.get(i).setImageResource(R.drawable.ic_star_black_24dp);
-            }
-
-            // Fill half star
-            if (Math.round(userRating) > integerPart) {
-                ratingStarViews.get(integerPart).setImageResource(
-                        R.drawable.ic_star_half_black_24dp);
-            }
-
-        } else {
-            mMovieRatingView.setVisibility(View.GONE);
-        }
+//        if (mMovie.getUserRating() != null && !mMovie.getUserRating().isEmpty()) {
+//            String userRatingStr = getResources().getString(R.string.user_rating_movie,
+//                    mMovie.getUserRating());
+//            mMovieRatingView.setText(userRatingStr);
+//
+//            float userRating = Float.valueOf(mMovie.getUserRating()) / 2;
+//            int integerPart = (int) userRating;
+//
+//            // Fill stars
+//            for (int i = 0; i < integerPart; i++) {
+//                ratingStarViews.get(i).setImageResource(R.drawable.ic_star_black_24dp);
+//            }
+//
+//            // Fill half star
+//            if (Math.round(userRating) > integerPart) {
+//                ratingStarViews.get(integerPart).setImageResource(
+//                        R.drawable.ic_star_half_black_24dp);
+//            }
+//
+//        } else {
+//            mMovieRatingView.setVisibility(View.GONE);
+//        }
     }
 
-    private void updateFavoriteButtons() {
-        // Needed to avoid "skip frames".
-        new AsyncTask<Void, Void, Boolean>() {
+//    private void updateFavoriteButtons() {
+//        // Needed to avoid "skip frames".
+//        new AsyncTask<Void, Void, Boolean>() {
+//
+//            @Override
+//            protected Boolean doInBackground(Void... params) {
+//                return isFavorite();
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Boolean isFavorite) {
+//                if (isFavorite) {
+//                    mButtonRemoveFromFavorites.setVisibility(View.VISIBLE);
+//                    mButtonMarkAsFavorite.setVisibility(View.GONE);
+//                } else {
+//                    mButtonMarkAsFavorite.setVisibility(View.VISIBLE);
+//                    mButtonRemoveFromFavorites.setVisibility(View.GONE);
+//                }
+//            }
+//        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//
+//        mButtonMarkAsFavorite.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        markAsFavorite();
+//                    }
+//                });
+//
+//        mButtonWatchTrailer.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (mTrailerListAdapter.getItemCount() > 0) {
+//                            watch(mTrailerListAdapter.getTrailers().get(0), 0);
+//                        }
+//                    }
+//                });
+//
+//        mButtonRemoveFromFavorites.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        removeFromFavorites();
+//                    }
+//                });
+//    }
+//
+//    private boolean isFavorite() {
+//        Cursor movieCursor = getContext().getContentResolver().query(
+//                TravelogyContract.FlagEntry.CONTENT_URI,
+//                new String[]{TravelogyContract.FlagEntry.COLUMN_FLAG_ID},
+//                TravelogyContract.FlagEntry.COLUMN_FLAG_ID + " = " + mMovie.getId(),
+//                null,
+//                null);
+//
+//        if (movieCursor != null && movieCursor.moveToFirst()) {
+//            movieCursor.close();
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
-            @Override
-            protected Boolean doInBackground(Void... params) {
-                return isFavorite();
-            }
-
-            @Override
-            protected void onPostExecute(Boolean isFavorite) {
-                if (isFavorite) {
-                    mButtonRemoveFromFavorites.setVisibility(View.VISIBLE);
-                    mButtonMarkAsFavorite.setVisibility(View.GONE);
-                } else {
-                    mButtonMarkAsFavorite.setVisibility(View.VISIBLE);
-                    mButtonRemoveFromFavorites.setVisibility(View.GONE);
-                }
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-        mButtonMarkAsFavorite.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        markAsFavorite();
-                    }
-                });
-
-        mButtonWatchTrailer.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mTrailerListAdapter.getItemCount() > 0) {
-                            watch(mTrailerListAdapter.getTrailers().get(0), 0);
-                        }
-                    }
-                });
-
-        mButtonRemoveFromFavorites.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        removeFromFavorites();
-                    }
-                });
-    }
-
-    private boolean isFavorite() {
-        Cursor movieCursor = getContext().getContentResolver().query(
-                FlagContract.FlagEntry.CONTENT_URI,
-                new String[]{FlagContract.FlagEntry.COLUMN_FLAG_ID},
-                FlagContract.FlagEntry.COLUMN_FLAG_ID + " = " + mMovie.getId(),
-                null,
-                null);
-
-        if (movieCursor != null && movieCursor.moveToFirst()) {
-            movieCursor.close();
-            return true;
-        } else {
-            return false;
-        }
+    public void open(Photo photo, int position) {
+//        if (mTwoPane) {
+//            Bundle arguments = new Bundle();
+//            arguments.putParcelable(PhotoListFragment.ARG_MOVIE, movie);
+//            PhotoListFragment fragment = new PhotoListFragment();
+//            fragment.setArguments(arguments);
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.movie_detail_container, fragment)
+//                    .commit();
+//        } else {
+//            Intent intent = new Intent(this, PhotoListActivity.class);
+//            intent.putExtra(PhotoListFragment.ARG_MOVIE, movie);
+//            startActivity(intent);
+//        }
     }
 
     private void updateShareActionProvider(Trailer trailer) {
@@ -379,4 +462,82 @@ public class PhotoListFragment extends Fragment implements FetchTrailersTask.Lis
                 + trailer.getTrailerUrl());
         mShareActionProvider.setShareIntent(sharingIntent);
     }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        Log.v("Luke", "PhotoList Fragment onLoadFinished~~~~~~~");
+        mAdapter.add(cursor);
+
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        Log.v("Luke", "PhotoList Fragment onCreateLoader~~~~~~~");
+        return new CursorLoader(getContext(),
+                TravelogyContract.PhotoEntry.CONTENT_URI,
+                TravelogyContract.PhotoEntry.PHOTO_COLUMNS,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        // Not used
+    }
+
+
+
+//    public Location readGeoTagImage(String imagePath)
+//    {
+//        Log.v("Luke", "Photo readGeoTagImage #### imagePath "+imagePath);
+//        Location loc = new Location("");
+//        try {
+//            ExifInterface exif = new ExifInterface(imagePath);
+//            String exifLatitude = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
+//            String exifLongitude = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+//
+//            Log.v("Luke", "Photo readGeoTagImage #### mLat "+exifLatitude + " mLong "+exifLongitude);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return loc;
+//    }
+
+    public Location readGeoTagImage(String imagePath)
+    {
+        Location loc = new Location("");
+        try {
+            ExifInterface exif = new ExifInterface(imagePath);
+            float [] latlong = new float[2] ;
+            if(exif.getLatLong(latlong)){
+                loc.setLatitude(latlong[0]);
+                loc.setLongitude(latlong[1]);
+                Log.v("Luke","PhotoListFragment ++++  readGeoTagImage latlong[0] "+latlong[0] + " latlong[1] "+latlong[1]);
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return loc;
+    }
+
+
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = getContext().getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
+
+
 }

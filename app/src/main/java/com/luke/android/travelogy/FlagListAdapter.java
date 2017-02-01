@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.luke.android.travelogy.data.FlagContract;
+import com.luke.android.travelogy.data.TravelogyContract;
 import com.luke.android.travelogy.network.Flag;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -64,13 +64,13 @@ public class FlagListAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Flag movie = mFlags.get(position);
+        final Flag flag = mFlags.get(position);
         final Context context = holder.mView.getContext();
 
-        holder.mFlag = movie;
-        holder.mTitleView.setText(movie.getTitle());
+        holder.mFlag = flag;
+        holder.mTitleView.setText(flag.getTitle());
 
-        String posterUrl = movie.getPosterUrl(context);
+        String posterUrl = flag.getPosterUrl(context);
         // Warning: onError() will not be called, if url is null.
         // Empty url leads to app crash.
         if (posterUrl == null) {
@@ -78,13 +78,13 @@ public class FlagListAdapter
         }
 
         Picasso.with(context)
-                .load(movie.getPosterUrl(context))
+                .load(flag.getPosterUrl(context))
                 .config(Bitmap.Config.RGB_565)
                 .into(holder.mThumbnailView,
                         new Callback() {
                             @Override
                             public void onSuccess() {
-                                if (holder.mFlag.getId() != movie.getId()) {
+                                if (holder.mFlag.getId() != flag.getId()) {
                                     holder.cleanUp();
                                 } else {
                                     holder.mThumbnailView.setVisibility(View.VISIBLE);
@@ -101,7 +101,7 @@ public class FlagListAdapter
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallbacks.open(movie, holder.getAdapterPosition());
+                mCallbacks.open(flag, holder.getAdapterPosition());
             }
         });
     }
@@ -145,10 +145,10 @@ public class FlagListAdapter
         mFlags.clear();
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                long id = cursor.getLong(FlagContract.FlagEntry.COL_FLAG_ID);
-                String title = cursor.getString(FlagContract.FlagEntry.COL_FLAG_TITLE);
-                String posterPath = cursor.getString(FlagContract.FlagEntry.COL_FLAG_POSTER_PATH);
-                String backdropPath = cursor.getString(FlagContract.FlagEntry.COL_FLAG_BACKDROP_PATH);
+                long id = cursor.getLong(TravelogyContract.FlagEntry.COL_FLAG_ID);
+                String title = cursor.getString(TravelogyContract.FlagEntry.COL_FLAG_TITLE);
+                String posterPath = cursor.getString(TravelogyContract.FlagEntry.COL_FLAG_POSTER_PATH);
+                String backdropPath = cursor.getString(TravelogyContract.FlagEntry.COL_FLAG_BACKDROP_PATH);
                 Flag movie = new Flag(id, title, posterPath, backdropPath);
                 mFlags.add(movie);
             } while (cursor.moveToNext());

@@ -3,12 +3,48 @@
 
     <item
         is-multidex="true"
-        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.4.0/jars/classes.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/design/24.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="613298b7aa012f121ce542881c0a599ebd8078f2">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-measurement-8.4.0_072df6d49fa45a24669f80958e04d77342d8a8a2/classes.dex" />
+        sha1="fc29308a7a8f6d4407b34634eb48fb8b817f9b23">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-24.0.0_5298593fbd74725c85b80465ad17307077a06c4f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/24.0.0/jars/libs/internal_impl-24.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="b6763651ec29b4c95e7bbe63fc393ffcc8c4c2c5">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.0.0_e0124045cc80057a4b5e3d86ab1130d14c8ec11a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="15e59454416c6341bd3ed2533b585cd340682dd1">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-auth-9.8.0_5204ea4b35423439810a8425b156708afdf5e0ad/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="74ac7cbcf0de4a88e59612dc3a9e3f9e71acb4ca">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-cast-9.8.0_4e024bfd55e848518885524a6248c34ce6f81d64/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="04bbbddf868aa02dd33f9e90d8f5d908c360f638">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-location-9.8.0_ec7b97696eae6d9abd7256fd59e0eb4b47d67737/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -21,48 +57,30 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-8.4.0_937848b734162788b5c1b44c8c01d14ead741b6e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/lukekim/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/library-2.4.0_dfe47d850ca7c590d23c156356ab9a6a25367fe1/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.2.1_c273ef90b007f2bbed07d0f2f92297980bc07a1b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.3.0_091e1eb7e6162f1ed326dde5f172d945f305a4be/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.melnykov/floatingactionbutton/1.2.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
         sha1="65620ba5e576dcec2c86efa440b00d042a27383b">
         <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.melnykov-floatingactionbutton-1.2.0_159645d13baab6e8afdc880d8d0a54ec35ab45aa/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="0b8e087da59c0b062c33f49a335e59f907086da2">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-wearable-9.8.0_522b9ec1be6d31ca691d6d49065909d533450307/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="894922f67adeaaef51f077a29e315da21a3382d3">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-24.0.0_c74ffdc94777c998796be249e9c8d1309bcd1a7c/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -84,12 +102,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.5.0/4de2b4ed3445c37ec1720a7d214712e845a24636/okhttp-2.5.0.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics-impl/9.8.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="4de2b4ed3445c37ec1720a7d214712e845a24636">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-2.5.0_b4247d3efb765f6a7c391b5b9250cb1ab564c2a3/classes.dex" />
+        sha1="50e35ae101a679c4c8ef3dda075b1df9d5d947d9">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-analytics-impl-9.8.0_c4510244ac513e5759f4f27b5718ae71fc6f2a2f/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -97,62 +115,53 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="16d6db2b8506664763159ee25eecb931b4169204">
+        sha1="b57fb807054107fd874d6f7278b94b41aacf5e4b">
         <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_4becd96959311834739a55ebd5023115a1837fa4/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-places/9.8.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/picasso-2.5.2_0ab3068d71df807affbd53c129c55fedd7b2125b/classes.dex" />
+        sha1="679251204de40ace98776a6f4e3a649c27e3d89f">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-places-9.8.0_5c696c2c4ac16a8e7c112874fe5ea276a6e6f7c4/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.1/jars/classes.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.2.1_d07dbdd18afab2c70d0543dbb8719a43b6324b5f/classes.dex" />
+        sha1="e70f608219ed6b974644c333249ab2bb7b71de98">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-24.0.0_9dce1701ca645a3011ab1dd79ae89e5b24fbb677/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/9.8.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-8.4.0_31b77a42d4b53e9d5b8c1c8415899dbb89fdb22a/classes.dex" />
+        sha1="16afe57c1d7f8165d107c7806ce7b0c71de87159">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-analytics-9.8.0_47397035505b24d80cf05e10c30aafca504aaec5/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads-lite/9.8.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.3.0_06b50a9061693af0217131c0099a23bad621e048/classes.dex" />
+        sha1="e9b2cfdfd59b03643f1e240668275378b96615a8">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-lite-9.8.0_f0804daadb8a00f2afba62b0fe044d124bba1a9e/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.0.0/49eb3ad545e7701234e4dd83db8dc1344b577f23/converter-gson-2.0.0.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-awareness/9.8.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="49eb3ad545e7701234e4dd83db8dc1344b577f23">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/converter-gson-2.0.0_1c987326a0c6fe2df9c75a0c13b0b9d83335e5db/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/design/23.2.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.2"
-        sha1="1aa5b025efe97f5006f5be16d6ca67c6c3c0c0d8">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.2.0_37a61f41b55643f7d02223d04d5a9e03a6284c27/classes.dex" />
+        sha1="a2537b11ae24b42172d34e2a613fc0b903c56158">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-awareness-9.8.0_317c89b063d386e609ec32c6855ad25b7ab9a897/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -165,21 +174,30 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.4.0/jars/classes.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/libs/internal_impl-24.0.0.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="2d7fe76982677315c4dc4edfb459c8ca718a9d4c">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gcm-8.4.0_ce5fa72636d750a4e1d9c5fedcc95300527891dd/classes.dex" />
+        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.0.0_af0b5c4ac8d55d2c303b67deaf72d0a2539ea637/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.8.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.3.0_e8583ede159a4743d230048e1394e6e4daf0eee5/classes.dex" />
+        sha1="9f6d236bac26d02b410e4ee186ba517ace5ee661">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-9.8.0_eed22d2b497b831ee74cc519b37a1944a330d5a6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/gridlayout-v7/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="ec26ade997fbf2643d8c25cee7a9d1adecb3478d">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-gridlayout-v7-24.0.0_5e63d70833a2fa9aef5a616697aa71aaeb616f60/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -187,8 +205,44 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="d204dbd388751436b84a5074df1bf007e7bd32ec">
+        sha1="8104be5ce272133e06984409ede412549f5b233a">
         <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_db3a3c289426fadeea66c5c3e73e19f950612a58/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="bf2e1838e4428616c1aa26edf43de72b5b99bf84">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-9.8.0_43ddccf6d1197ac5f5c436eb412da203a1e19a38/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-config/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="289cad663c288ce965463cb9ece8b35cc7de0fac">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-config-9.8.0_c73e30324823e6e6156e358a19025c63ef6c93ec/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-storage/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="7fd91ec2730fdaa82906aad32a3f3d3e574bae56">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-storage-9.8.0_2f0344d3074a548a5fd97aeb0b4b01297cd355ff/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="a972970c8beddb69c198f61f3fc55f0606a7dfe3">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-9.8.0_27c32cbcdf9e55021fcbba351cfed1fcd522008c/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -201,6 +255,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gass/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="363a20f1d25336e827dd24020f2ecdc42d62638f">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gass-9.8.0_403595ebf15206e01251a373875470c8e993f53b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/me.zhanghai.android.materialprogressbar/library/1.1.5/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -210,48 +273,57 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/gridlayout-v7/23.3.0/jars/classes.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/24.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="003ebdacd5f75067b8724f92bd5eefa323d870aa">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-gridlayout-v7-23.3.0_7625261d0dd00befc91a64daed4d5235fe0d7434/classes.dex" />
+        sha1="b327fbe2fad414bc38cf0ce8f7efe1a38f572837">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-mediarouter-v7-24.0.0_584451f6118fc405d12f1f752d8dab483dfcb8e1/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.1/jars/classes.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="673d77a5bbddd766037f088e775df525c46407f0">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.2.1_c6b9ac7ea909a47501d487fdecb99d5e68b777ab/classes.dex" />
+        sha1="3bd97cfefd783e9de1dd1c30574a6adb44b4409b">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-24.0.0_42acfb8db6caf678003c663e69ee1c7b22e08a87/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/palette-v7/24.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.6.0_f9a962908c8c75880b56c4d2c1e9acc6f0abd7fe/classes.dex" />
+        sha1="734e80dffea7bd76c18ae256822a124c30d85850">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-palette-v7-24.0.0_54d3c5e118a976d63aee6436e964b6039297d3a7/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/jars/classes.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/9.8.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.2.1_0de54ea57bf4ddf303ccb49c0425caf41595cc17/classes.dex" />
+        sha1="0b53c4b90654b67ee3892a8e2e7b819c083ab7a6">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-drive-9.8.0_f26006b30ef9f827257769ea1c4f392af5fb6b69/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/lukekim/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.0.0/5c06d197fb7fa875ad452f562e3310dd9949d066/retrofit-2.0.0.jar"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth-module/9.8.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
-        sha1="5c06d197fb7fa875ad452f562e3310dd9949d066">
-        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/retrofit-2.0.0_73790ecb4450593ce19158105e3c5109216e2cb4/classes.dex" />
+        sha1="3f8f779a22cbb4c4d0759467a4f1011bb5252970">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-auth-module-9.8.0_1039616bf6bba1e34c0087938d5ecc4e4f97f5cf/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="9ff04cc3470178a44512624036751a803418c2ca">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-9.8.0_e6e8219acfa1c9e082fa62682b9e280d0fe38e87/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -264,12 +336,372 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-iid/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="85299bf1924dde0200109a58033c5ef84ecb6991">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-iid-9.8.0_437ff1d6da7d16694a0731379909bac1f3c6d8c6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="ca851be26ff89f5b32cc222cee98139fb3fac830">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-9.8.0_b0c9d93b540b1ef7b6fd614aefb1d24740b9aa99/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="c61641e333fa88da21758bab8cc28ee16604b05f">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-9.8.0_1b49c7fc2fcc1b8cae0bfd79fd2874c85d070a59/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="2d3035050a075484cbf2e33f1ce1f779bae4d451">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-panorama-9.8.0_8847fad131f78a4d8f19baeb5200bba4afead10e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="190a642ba16d1421296a4d794606279b80039c59">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-impl-9.8.0_66fabf8a20443b1a8e670357162250603db99b63/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="122ec9237acd8a57d974b9d529987f1ee6ca5aea">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-maps-9.8.0_58c477ea176369986a5d066f9aa4ce3a90d897a9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e3234cd25e23069abd48ecd2117bc0e8011bf45a">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appindexing-9.8.0_ec7b8b9cc3342d05d20be15e84f076ded51c5059/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="a30aea7df545072ad3c06f56b2efc13e67222140">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-vision-9.8.0_87a547c6923663dfa0344542f8efaf175f6c1f68/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="9dae58326f6f6a515022468cce56dd04ec3b9fdb">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gcm-9.8.0_d0e08a1eb717a17693bf27915a70cdc6e7e1d069/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/library-2.4.0_dfe47d850ca7c590d23c156356ab9a6a25367fe1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="c81df6bd515398ebe45089b0b16c55752a131f6a">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-nearby-9.8.0_0790e0e45e75c7eaca9ba20156b7eed0bb7cc1c1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database-connection/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="5f47ede9561595584dca71104baa0fecb36dda87">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-database-connection-9.8.0_0136e0eb1e6b711b320827c2c159a680db533fb7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="a1ed98e01bd58976d80c062fd0ea2968a1ff68a1">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-base-9.8.0_501a2d5dc5e5b588b0546bbc6f0ccf1ca027c227/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.5.0/4de2b4ed3445c37ec1720a7d214712e845a24636/okhttp-2.5.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="4de2b4ed3445c37ec1720a7d214712e845a24636">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-2.5.0_b4247d3efb765f6a7c391b5b9250cb1ab564c2a3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="f2d240dd085626f03f759c41d628a0c8b63e491f">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-9.8.0_14bf0efe35101abcd83fa64672a1babe6a46c896/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="03df48d3713661d66ad024b1e406259a4c26fcac">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-database-9.8.0_1e2ec06de3a7ef64ab11d246426135bb71216bc3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager-api/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="266570862e5792ef3c51143a8b8593cf54fac68d">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-api-9.8.0_ca285ac3e133fd255b4214f8a6cf525ce0703ce1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-crash/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="b4671be3d1288bf4e5f527cd33e42909fbe4ecc6">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-crash-9.8.0_c3b3df4f02b1a53c8c89386992e1b94347a4bf49/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/picasso-2.5.2_0ab3068d71df807affbd53c129c55fedd7b2125b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.0.0/support-annotations-24.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.0.0_0c2445427cf3aaf1b73fc49c0f5aa013270d42d1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.0.0/49eb3ad545e7701234e4dd83db8dc1344b577f23/converter-gson-2.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="49eb3ad545e7701234e4dd83db8dc1344b577f23">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/converter-gson-2.0.0_1c987326a0c6fe2df9c75a0c13b0b9d83335e5db/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="20a3c4e355150c15c13dd58045d43ad0c717d916">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-safetynet-9.8.0_ac8f44872ac6bf348a0d489a6a8d809d3f556ca8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth-common/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="4438b1a7848a7c571122ba618aa1304514aabee6">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-auth-common-9.8.0_d8d36549c7229604d3ded9caf35fd4356b6221c9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-clearcut/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="ee5304fd374e0b4ebf6b42d4037fbfb2c5336511">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-clearcut-9.8.0_d4f17cba887868a6c5a3957a4d9c2c6febc8f29f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="a7a04d6b7c01e569a285fa627cf64f5b05295906">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-fitness-9.8.0_8a0819b5c1a296e4c9329205e8b35627a271c736/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6b6f292b8b951dcf2ecf2b20853e3eabc7d65c48">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-iid-9.8.0_82608480eb08a81ca227173824eab4b7f55df0fe/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.0.0_9bee903e0f2a4058e5565a9f0c7782861025230a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="910c013c511f752c4bbe24c5f492f669f4a3ccc0">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-wallet-9.8.0_28e47a5286bfc93794af70bbd237b8c8591eb530/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="7e92aadd0697922316d1395c1887a23aebec640a">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-9.8.0_77401940f74957c146c7e073f556029013626e28/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="cef85cfc7df40e29fbea58844dd4c1e7d0b15542">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-identity-9.8.0_f7b5a0cb47cf1f55779ef5ffc7a58c64e2c9258e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="fbb3885c40e431cd2b0dc69c0cab2bf6d5da7b43">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-games-9.8.0_35cdca6b26f3e7130cafc3e2141780e554fab2de/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-instantapps/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="00d358528c5a8731a6e19bca910cbb3fd755ee31">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-instantapps-9.8.0_2ea6c94af82b166f496f3b0a499be9fd9d7f1ff0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="3daa7a9c9009fd386872a84c177a76979bdcafd6">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-plus-9.8.0_ccdbf65047cbdd451e4e458baf0a07cf56132310/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.6.0_f9a962908c8c75880b56c4d2c1e9acc6f0abd7fe/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-storage-common/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="ec9104b53aee77dfcfd2fe1c4add23ff7c4df55f">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-storage-common-9.8.0_f11a3204980cd7b2b60ab31bf8d3df01f39ced6a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast-framework/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="055eed08c9cff50cac0db69c74c4d9ff7aef3d84">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-cast-framework-9.8.0_fb1d945318db220dc1db7fa35b226c223796f29c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="5ffe8867f51cfc726e9fb21db1e5b6962ebf25a0">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-messaging-9.8.0_dd1f8c3c5f9e6f1534070f18bbe44772ce345175/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="0874286cc2fd88d54fdf130e9d5372730da6de97">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-24.0.0_919862fe09e4163d2e1621cdf47c12ed49ecb8c7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/net.simonvt.schematic/schematic/0.6.3/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.2"
         sha1="f6f5730f19d22f177096c8d134d4892b0fbd631d">
         <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/net.simonvt.schematic-schematic-0.6.3_1a5e715d7f5b1eeed74af706ff7db1b73576cb1d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.0.0/5c06d197fb7fa875ad452f562e3310dd9949d066/retrofit-2.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="5c06d197fb7fa875ad452f562e3310dd9949d066">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/retrofit-2.0.0_73790ecb4450593ce19158105e3c5109216e2cb4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e56f31b23ddb067f95f01255295167db7c798612">
+        <dex dex="/Users/lukekim/Documents/workspace/android/Capstone-Project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appinvite-9.8.0_500ed115cea335e5a15e9d27afea4f79c7c26f87/classes.dex" />
     </item>
 
 </items>

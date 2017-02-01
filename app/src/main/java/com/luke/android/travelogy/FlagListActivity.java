@@ -28,7 +28,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.luke.android.travelogy.data.FlagContract;
+import com.luke.android.travelogy.data.TravelogyContract;
 import com.luke.android.travelogy.details.PhotoListActivity;
 import com.luke.android.travelogy.details.PhotoListFragment;
 import com.luke.android.travelogy.network.Flag;
@@ -61,7 +61,7 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
     private Intent mServiceIntent;
     private Context mContext;
 
-    @Bind(R.id.movie_list)
+    @Bind(R.id.flag_list)
     RecyclerView mRecyclerView;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -90,7 +90,7 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
 
         mToolbar.setTitle(R.string.title_flag_list);
         setSupportActionBar(mToolbar);
-        mServiceIntent = new Intent(this, FlagIntentService.class);
+        mServiceIntent = new Intent(this, TravelogyIntentService.class);
         String tag = RetainedFragment.class.getName();
         this.mRetainedFragment = (RetainedFragment) getSupportFragmentManager().findFragmentByTag(tag);
         if (this.mRetainedFragment == null) {
@@ -288,8 +288,8 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         findViewById(R.id.progress).setVisibility(View.VISIBLE);
         return new CursorLoader(this,
-                FlagContract.FlagEntry.CONTENT_URI,
-                FlagContract.FlagEntry.MOVIE_COLUMNS,
+                TravelogyContract.FlagEntry.CONTENT_URI,
+                TravelogyContract.FlagEntry.FLAG_COLUMNS,
                 null,
                 null,
                 null);
