@@ -28,9 +28,15 @@ public class TravelogyIntentService extends IntentService {
         Log.v("Luke","TravelogyIntentService !!!!!!!!!!!!!!!!!!");
         TravelogyTaskService flagTaskService = new TravelogyTaskService(this);
         Bundle args = new Bundle();
-        if (intent.getStringExtra("tag").equals("add") || intent.getStringExtra("tag").equals("addPhoto")){
+        if (intent.getStringExtra("tag").equals("add")){
             args.putString("name", intent.getStringExtra("name"));
             Log.v("Luke", "TravelogyIntentService onHandleIntent "+intent.getStringExtra("name"));
+        }
+        else if (intent.getStringExtra("tag").equals("addPhoto")) {
+            args.putString("name", intent.getStringExtra("name"));
+            args.putString("flagName", intent.getStringExtra("flagName"));
+            Log.v("Luke", "TravelogyIntentService onHandleIntent1 "+intent.getStringExtra("name"));
+            Log.v("Luke", "TravelogyIntentService onHandleIntent1 "+intent.getStringExtra("flagName"));
         }
 
         // We can call OnRunTask from the intent service to force it to run immediately instead of

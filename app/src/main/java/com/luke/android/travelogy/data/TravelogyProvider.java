@@ -7,22 +7,50 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 public class TravelogyProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     static final int FLAGS = 300;
     static final int PHOTOS = 301;
+    static final int PHOTOS_BY_FLAGS = 302;
     private TravelogyDBHelper mOpenHelper;
+
+
+    private static final SQLiteQueryBuilder sPhotoByFlagQueryBuilder;
+
+    static{
+        sPhotoByFlagQueryBuilder = new SQLiteQueryBuilder();
+
+        //This is an inner join which looks like
+        //weather INNER JOIN location ON photo.flag_id = flag._id
+        sPhotoByFlagQueryBuilder.setTables(
+                TravelogyContract.PhotoEntry.TABLE_NAME + " INNER JOIN " +
+                        TravelogyContract.FlagEntry.TABLE_NAME +
+                        " ON " + TravelogyContract.PhotoEntry.TABLE_NAME +
+                        "." + TravelogyContract.PhotoEntry.COLUMN_FLAG_KEY +
+                        " = " + TravelogyContract.FlagEntry.TABLE_NAME +
+                        "." + TravelogyContract.FlagEntry._ID);
+    }
+
+
+    //flag.flag_setting = ?
+    private static final String sFlagSettingSelection =
+            TravelogyContract.FlagEntry.TABLE_NAME+
+                    "." + TravelogyContract.FlagEntry.COLUMN_FLAG_SETTING + " = ? ";
+
 
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = TravelogyContract.CONTENT_AUTHORITY;
         matcher.addURI(authority, TravelogyContract.PATH_FLAG, FLAGS);
         matcher.addURI(authority, TravelogyContract.PATH_PHOTO, PHOTOS);
+        matcher.addURI(authority, TravelogyContract.PATH_PHOTO+"/*", PHOTOS_BY_FLAGS);
         return matcher;
     }
 
@@ -62,6 +90,10 @@ public class TravelogyProvider extends ContentProvider {
                 );
                 break;
             }
+            case PHOTOS_BY_FLAGS: {
+                cursor = getPhotoByFlag(uri, projection, sortOrder);
+                break;
+            }
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -81,6 +113,8 @@ public class TravelogyProvider extends ContentProvider {
                 return TravelogyContract.FlagEntry.CONTENT_TYPE;
             case PHOTOS:
                 return TravelogyContract.PhotoEntry.CONTENT_TYPE;
+            case PHOTOS_BY_FLAGS:
+                return TravelogyContract.PhotoEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -92,6 +126,7 @@ public class TravelogyProvider extends ContentProvider {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         Uri returnUri;
+        Log.v("Luke", "TP Insert~~~~~~~ START ");
         switch (match) {
             case FLAGS: {
                 long id = db.insert(TravelogyContract.FlagEntry.TABLE_NAME, null, values);
@@ -114,7 +149,9 @@ public class TravelogyProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
+        Log.v("Luke", "TP Insert~~~~~~~ "+getContext() + " uri "+uri);
         if (getContext() != null) {
+            Log.v("Luke", "TP Insert~~~~~~~ notifying!!!!!!");
             getContext().getContentResolver().notifyChange(uri, null);
         }
         return returnUri;
@@ -171,4 +208,27 @@ public class TravelogyProvider extends ContentProvider {
         }
         return rowsUpdated;
     }
+
+    private Cursor getPhotoByFlag(Uri uri, String[] projection, String sortOrder) {
+        String flagSetting = TravelogyContract.FlagEntry.getFlagFromUri(uri);
+
+        String[] selectionArgs;
+        String selection;
+
+        selection = sFlagSettingSelection;
+        selectionArgs = new String[]{flagSetting};
+
+        return sPhotoByFlagQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+
+
+
+    }
+
 }

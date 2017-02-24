@@ -51,15 +51,15 @@ import static android.app.Activity.RESULT_OK;
 public class PhotoListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, PhotoListAdapter.Callbacks {
 
     public static final String LOG_TAG = PhotoListFragment.class.getSimpleName();
-    public static final String ARG_MOVIE = "ARG_MOVIE";
+    public static final String ARG_FLAG = "ARG_FLAG";
     public static final String EXTRA_TRAILERS = "EXTRA_TRAILERS";
     public static final String EXTRA_REVIEWS = "EXTRA_REVIEWS";
-    private static final int PHOTO_LIST_LOADER = 0;
+    private static final int PHOTO_LIST_LOADER = 1;
     private int PICK_IMAGE_REQUEST = 1;
     private Intent mServiceIntent;
     private Activity activity;
 
-    private Flag mMovie;
+    private Flag mFlag;
     private final ArrayList<Location> mLocations;
     private TrailerListAdapter mTrailerListAdapter;
     private ReviewListAdapter mReviewListAdapter;
@@ -79,7 +79,10 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
         super.onAttach(context);
         // Make sure that container activity implement the callback interface
         try {
-            mCallback = (DataPassListener)context;
+            if (context instanceof DataPassListener) {
+                mCallback = (DataPassListener)context;
+            }
+
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement DataPassListener");
@@ -93,11 +96,13 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments().containsKey(ARG_MOVIE)) {
-            mMovie = getArguments().getParcelable(ARG_MOVIE);
-        }
+        setRetainInstance(false);
         setHasOptionsMenu(true);
+
+        if (getArguments().containsKey(ARG_FLAG)) {
+            mFlag = getArguments().getParcelable(ARG_FLAG);
+        }
+
 
     }
 
@@ -106,35 +111,41 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
         super.onActivityCreated(savedInstanceState);
 
         activity = getActivity();
+        boolean mTwoPane = activity.findViewById(R.id.flag_list) != null;
         mServiceIntent = new Intent(activity, TravelogyIntentService.class);
-        getLoaderManager().initLoader(PHOTO_LIST_LOADER, null, this);
-        CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout)
-                activity.findViewById(R.id.toolbar_layout);
-        if (appBarLayout != null && activity instanceof PhotoListActivity) {
-            appBarLayout.setTitle(mMovie.getTitle());
-        }
+        if (!mTwoPane) {
+            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout)
+                    activity.findViewById(R.id.toolbar_layout);
+            if (appBarLayout != null && activity instanceof PhotoListActivity) {
+                appBarLayout.setTitle(mFlag.getTitle());
+            }
+            appBarLayout.setExpandedTitleTextAppearance(R.style.ShadowTextStyle);
 
-        appBarLayout.setExpandedTitleTextAppearance(R.style.ShadowTextStyle);
+        }
 
         ImageView movieBackdrop = ((ImageView) activity.findViewById(R.id.movie_backdrop));
         if (movieBackdrop != null) {
             Picasso.with(activity)
-                    .load(mMovie.getBackdropUrl(getContext()))
+                    .load(mFlag.getBackdropUrl(getContext()))
                     .config(Bitmap.Config.RGB_565)
                     .into(movieBackdrop);
         }
+        if (!mTwoPane) {
+            FloatingActionButton fab = (FloatingActionButton) activity.findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    Log.v("Luke", "PhotoListFragment fab!!!!!! ");
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
 
-        FloatingActionButton fab = (FloatingActionButton) activity.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                Log.v("Luke", "PhotoListFragment fab!!!!!! ");
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                }
+            });
+        }
 
-            }
-        });
+
+
 
     }
 
@@ -149,6 +160,7 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
             Log.v("Luke","PhotoListFragment onActivityResult!!!! country name: "+uri.toString());
             mServiceIntent.putExtra("tag", "addPhoto");
             mServiceIntent.putExtra("name", uri.toString());
+            mServiceIntent.putExtra("flagName", mFlag.getTitle());
             activity.startService(mServiceIntent);
 
 //            try {
@@ -216,12 +228,23 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
 //            fetchReviews();
 //        }
 
+        Loader loader = getLoaderManager().getLoader(PHOTO_LIST_LOADER);
+        Log.v("Luke","PhogoListFragment.onActivityCreated loader: "+loader);
+        if (loader != null) {
+            getLoaderManager().destroyLoader(PHOTO_LIST_LOADER);
+            getLoaderManager().restartLoader(PHOTO_LIST_LOADER, null, this);
+        } else {
+            getLoaderManager().initLoader(PHOTO_LIST_LOADER, null, this);
+        }
+
         return rootView;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        Log.v("Luke", "PhotoListFragment DestryLoader~~~~~~~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//        getLoaderManager().destroyLoader(PHOTO_LIST_LOADER);
 //        ArrayList<Trailer> trailers = mTrailerListAdapter.getTrailers();
 //        if (trailers != null && !trailers.isEmpty()) {
 //            outState.putParcelableArrayList(EXTRA_TRAILERS, trailers);
@@ -235,8 +258,11 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        String tag = PhotoListFragment.class.getName();
+        PhotoListFragment fragment = (PhotoListFragment) getFragmentManager().findFragmentByTag("fragment_tag_String");
+        Log.v("Luke", "PhotoListFragment onCreateOptionsMenu~~~~~~~!!!!!!!!!!!!!!!!!!!  fragment? "+fragment);
         inflater.inflate(R.menu.movie_detail_fragment, menu);
-        Log.v("Luke","PhotoListFragment ++++  onCreateOptionsMenu ");
+
 //        MenuItem shareTrailerMenuItem = menu.findItem(R.id.share_trailer);
 //        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareTrailerMenuItem);
     }
@@ -244,20 +270,32 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected item.getItemId()  "+item.getItemId() );
         Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected calling passData ");
-        ArrayList<Photo> photoList = new ArrayList();
-        photoList = mAdapter.getPhotos();
+        switch(item.getItemId()) {
+            case R.id.map_portrait:
+            case R.id.map_landscape:
+                ArrayList<Photo> photoList = new ArrayList();
+                photoList = mAdapter.getPhotos();
 
-        for (int i = 0 ; i < photoList.size(); ++i) {
+                for (int i = 0 ; i < photoList.size(); ++i) {
 
-            Uri uri = Uri.parse(photoList.get(i).getPoster());
-            Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected calling passData uri.getPath() "+uri.getPath());
-            String filePath = getRealPathFromURI(uri);
-            mLocations.add(readGeoTagImage(filePath));
-            Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected realfilePath "+filePath);
+                    Uri uri = Uri.parse(photoList.get(i).getPoster());
+                    Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected calling passData uri.getPath() "+uri.getPath());
+                    String filePath = getRealPathFromURI(uri);
+                    mLocations.add(readGeoTagImage(filePath));
+                    Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected realfilePath "+filePath);
+                }
+                mCallback.passData(mLocations);
+                break;
+
+            case R.id.photo_landscape:
+                Log.v("Luke", "PhotoListFragment optionmenuselected!!!!!! ");
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                break;
         }
 
-
-        mCallback.passData(mLocations);
         return super.onOptionsItemSelected(item);
     }
 
@@ -457,7 +495,7 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
     private void updateShareActionProvider(Trailer trailer) {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mMovie.getTitle());
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mFlag.getTitle());
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, trailer.getName() + ": "
                 + trailer.getTrailerUrl());
         mShareActionProvider.setShareIntent(sharingIntent);
@@ -465,16 +503,32 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        Log.v("Luke", "PhotoList Fragment onLoadFinished~~~~~~~");
+        Log.v("Luke", "PhotoList Fragment onLoadFinished~~~~~~~**");
+        mAdapter = new PhotoListAdapter(new ArrayList<Photo>(), this);
+        mRecyclerView.setAdapter(mAdapter);
         mAdapter.add(cursor);
+        Log.v("Luke", "PhotoList Fragment onLoadFinished~~~~~~***count: "+mAdapter.getItemCount());
 
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         Log.v("Luke", "PhotoList Fragment onCreateLoader~~~~~~~");
+
+
+
+        Uri photoByFlag = TravelogyContract.PhotoEntry.buildPhotoUriByFlag(mFlag.getTitle());
+        Log.v("Luke", "PhotoList Fragment onCreateLoader~~~~~~~   "+photoByFlag);
+
+//        return new CursorLoader(getContext(),
+//                TravelogyContract.PhotoEntry.CONTENT_URI,
+//                TravelogyContract.PhotoEntry.PHOTO_COLUMNS,
+//                null,
+//                null,
+//                null);
+
         return new CursorLoader(getContext(),
-                TravelogyContract.PhotoEntry.CONTENT_URI,
+                photoByFlag,
                 TravelogyContract.PhotoEntry.PHOTO_COLUMNS,
                 null,
                 null,

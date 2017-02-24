@@ -22,8 +22,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -35,7 +33,6 @@ import com.luke.android.travelogy.network.Flag;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,9 +44,7 @@ import butterknife.ButterKnife;
 public class FlagListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         FetchMoviesTask.Listener, FlagListAdapter.Callbacks {
 
-    private static final String EXTRA_MOVIES = "EXTRA_MOVIES";
-    private static final String EXTRA_SORT_BY = "EXTRA_SORT_BY";
-    private static final int FAVORITE_MOVIES_LOADER = 0;
+    private static final int FLAG_LOADER = 0;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -95,8 +90,10 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         this.mRetainedFragment = (RetainedFragment) getSupportFragmentManager().findFragmentByTag(tag);
         if (this.mRetainedFragment == null) {
             this.mRetainedFragment = new RetainedFragment();
+            this.mRetainedFragment.setHasOptionsMenu(false);
             getSupportFragmentManager().beginTransaction().add(this.mRetainedFragment, tag).commit();
         }
+
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, getResources()
                 .getInteger(R.integer.grid_number_cols)));
@@ -106,25 +103,44 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
 
         // For large-screen layouts (res/values-w900dp).
         mTwoPane = findViewById(R.id.movie_detail_container) != null;
-
-        if (savedInstanceState != null) {
-            mSortBy = savedInstanceState.getString(EXTRA_SORT_BY);
-            if (savedInstanceState.containsKey(EXTRA_MOVIES)) {
-                List<Flag> movies = savedInstanceState.getParcelableArrayList(EXTRA_MOVIES);
-                mAdapter.add(movies);
-                findViewById(R.id.progress).setVisibility(View.GONE);
-
-                // For listening content updates for tow pane mode
-                if (mSortBy.equals(FetchMoviesTask.FAVORITES)) {
-                    getSupportLoaderManager().initLoader(FAVORITE_MOVIES_LOADER, null, this);
-                }
+        Log.v("Luke","FlagListActivity ++++ onCreate  mTwoPane "+mTwoPane);
+        if (!mTwoPane) {
+            //tag = PhotoListFragment.class.getName();
+            PhotoListFragment fragment = (PhotoListFragment) getSupportFragmentManager().findFragmentByTag("fragment_tag_String");
+            Log.v("Luke","FlagListActivity ++++ onCreate  fragment "+fragment);
+            if (fragment != null) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             }
-            updateEmptyState();
-        } else {
-            // Fetch Flags only if savedInstanceState == null
-            fetchMovies(mSortBy);
         }
 
+
+
+//        if (savedInstanceState != null) {
+//            mSortBy = savedInstanceState.getString(EXTRA_SORT_BY);
+//            if (savedInstanceState.containsKey(EXTRA_MOVIES)) {
+//                List<Flag> movies = savedInstanceState.getParcelableArrayList(EXTRA_MOVIES);
+//                mAdapter.add(movies);
+//                findViewById(R.id.progress).setVisibility(View.GONE);
+//
+//                // For listening content updates for tow pane mode
+//                if (mSortBy.equals(FetchMoviesTask.FAVORITES)) {
+//                    getSupportLoaderManager().initLoader(FAVORITE_MOVIES_LOADER, null, this);
+//                }
+//            }
+//            updateEmptyState();
+//        } else {
+//            // Fetch Flags only if savedInstanceState == null
+//            fetchMovies(mSortBy);
+//        }
+
+        Loader loader = getSupportLoaderManager().getLoader(FLAG_LOADER);
+        Log.v("Luke","FlagListActivity fab!!!! loader: "+loader);
+        if (loader != null) {
+            getSupportLoaderManager().destroyLoader(FLAG_LOADER);
+            getSupportLoaderManager().restartLoader(FLAG_LOADER, null, this);
+        } else {
+            getSupportLoaderManager().initLoader(FLAG_LOADER, null, this);
+        }
         updateEmptyState();
 
 
@@ -173,21 +189,25 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         });
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        ArrayList<Flag> movies = mAdapter.getMovies();
-        if (movies != null && !movies.isEmpty()) {
-            outState.putParcelableArrayList(EXTRA_MOVIES, movies);
-        }
-        outState.putString(EXTRA_SORT_BY, mSortBy);
 
-        // Needed to avoid confusion, when we back from detail screen (i. e. top rated selected but
-        // favorite movies are shown and onCreate was not called in this case).
-        if (!mSortBy.equals(FetchMoviesTask.FAVORITES)) {
-            getSupportLoaderManager().destroyLoader(FAVORITE_MOVIES_LOADER);
-        }
-    }
+
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+////        ArrayList<Flag> movies = mAdapter.getMovies();
+////        if (movies != null && !movies.isEmpty()) {
+////            outState.putParcelableArrayList(EXTRA_MOVIES, movies);
+////        }
+////        outState.putString(EXTRA_SORT_BY, mSortBy);
+////
+////        // Needed to avoid confusion, when we back from detail screen (i. e. top rated selected but
+////        // favorite movies are shown and onCreate was not called in this case).
+////        if (!mSortBy.equals(FetchMoviesTask.FAVORITES)) {
+////            getSupportLoaderManager().destroyLoader(FAVORITE_MOVIES_LOADER);
+////        }
+//        Log.v("Luke", "FlagListAcitivty DestryLoader~~~~~~~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+////        getSupportLoaderManager().destroyLoader(FLAG_LOADER);
+//    }
 
 
     public boolean isConnected() {
@@ -202,65 +222,66 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.movie_list_activity, menu);
-
-        switch (mSortBy) {
-            case FetchMoviesTask.MOST_POPULAR:
-                menu.findItem(R.id.sort_by_most_popular).setChecked(true);
-                break;
-            case FetchMoviesTask.TOP_RATED:
-                menu.findItem(R.id.sort_by_top_rated).setChecked(true);
-                break;
-            case FetchMoviesTask.FAVORITES:
-                menu.findItem(R.id.sort_by_favorites).setChecked(true);
-                break;
-        }
+        Log.v("Luke", "FlagListActivity.onCreateOptionsMenu~~~~~~~!!!!!!!");
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.movie_list_activity, menu);
+//
+//        switch (mSortBy) {
+//            case FetchMoviesTask.MOST_POPULAR:
+//                menu.findItem(R.id.sort_by_most_popular).setChecked(true);
+//                break;
+//            case FetchMoviesTask.TOP_RATED:
+//                menu.findItem(R.id.sort_by_top_rated).setChecked(true);
+//                break;
+//            case FetchMoviesTask.FAVORITES:
+//                menu.findItem(R.id.sort_by_favorites).setChecked(true);
+//                break;
+//        }
         return true;
     }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.sort_by_top_rated:
+//                if (mSortBy.equals(FetchMoviesTask.FAVORITES)) {
+//                    getSupportLoaderManager().destroyLoader(FAVORITE_MOVIES_LOADER);
+//                }
+//                mSortBy = FetchMoviesTask.TOP_RATED;
+//                fetchMovies(mSortBy);
+//                item.setChecked(true);
+//                break;
+//            case R.id.sort_by_most_popular:
+//                if (mSortBy.equals(FetchMoviesTask.FAVORITES)) {
+//                    getSupportLoaderManager().destroyLoader(FAVORITE_MOVIES_LOADER);
+//                }
+//                mSortBy = FetchMoviesTask.MOST_POPULAR;
+//                fetchMovies(mSortBy);
+//                item.setChecked(true);
+//                break;
+//            case R.id.sort_by_favorites:
+//                mSortBy = FetchMoviesTask.FAVORITES;
+//                item.setChecked(true);
+//                fetchMovies(mSortBy);
+//            default:
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sort_by_top_rated:
-                if (mSortBy.equals(FetchMoviesTask.FAVORITES)) {
-                    getSupportLoaderManager().destroyLoader(FAVORITE_MOVIES_LOADER);
-                }
-                mSortBy = FetchMoviesTask.TOP_RATED;
-                fetchMovies(mSortBy);
-                item.setChecked(true);
-                break;
-            case R.id.sort_by_most_popular:
-                if (mSortBy.equals(FetchMoviesTask.FAVORITES)) {
-                    getSupportLoaderManager().destroyLoader(FAVORITE_MOVIES_LOADER);
-                }
-                mSortBy = FetchMoviesTask.MOST_POPULAR;
-                fetchMovies(mSortBy);
-                item.setChecked(true);
-                break;
-            case R.id.sort_by_favorites:
-                mSortBy = FetchMoviesTask.FAVORITES;
-                item.setChecked(true);
-                fetchMovies(mSortBy);
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void open(Flag movie, int position) {
+    public void open(Flag flag, int position) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
-            arguments.putParcelable(PhotoListFragment.ARG_MOVIE, movie);
+            arguments.putParcelable(PhotoListFragment.ARG_FLAG, flag);
             PhotoListFragment fragment = new PhotoListFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.movie_detail_container, fragment)
+                    .replace(R.id.movie_detail_container, fragment,"fragment_tag_String")
                     .commit();
         } else {
             Intent intent = new Intent(this, PhotoListActivity.class);
-            intent.putExtra(PhotoListFragment.ARG_MOVIE, movie);
+            intent.putExtra(PhotoListFragment.ARG_FLAG, flag);
             startActivity(intent);
         }
     }
@@ -271,7 +292,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
             Log.v("Luke", "onFetchFinished~~~~~~~");
             mAdapter.add(((FetchMoviesTask.NotifyAboutTaskCompletionCommand) command).getMovies());
             updateEmptyState();
-            findViewById(R.id.progress).setVisibility(View.GONE);
         }
     }
 
@@ -280,13 +300,12 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         Log.v("Luke", "onLoadFinished~~~~~~~");
         mAdapter.add(cursor);
         updateEmptyState();
-        findViewById(R.id.progress).setVisibility(View.GONE);
 
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        findViewById(R.id.progress).setVisibility(View.VISIBLE);
+        Log.v("Luke", "FlagListActivity.onCreateLoader~~~~~~~ URI "+TravelogyContract.FlagEntry.CONTENT_URI);
         return new CursorLoader(this,
                 TravelogyContract.FlagEntry.CONTENT_URI,
                 TravelogyContract.FlagEntry.FLAG_COLUMNS,
@@ -300,27 +319,22 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         // Not used
     }
 
-    private void fetchMovies(String sortBy) {
-        if (!sortBy.equals(FetchMoviesTask.FAVORITES)) {
-            findViewById(R.id.progress).setVisibility(View.VISIBLE);
-            FetchMoviesTask.NotifyAboutTaskCompletionCommand command =
-                    new FetchMoviesTask.NotifyAboutTaskCompletionCommand(this.mRetainedFragment);
-            new FetchMoviesTask(sortBy, command).execute();
-        } else {
-            Log.v("Luke", "fetchMovies~~~~~~~ initLoader");
-            getSupportLoaderManager().initLoader(FAVORITE_MOVIES_LOADER, null, this);
-        }
-    }
+//    private void fetchMovies(String sortBy) {
+//        if (!sortBy.equals(FetchMoviesTask.FAVORITES)) {
+//            findViewById(R.id.progress).setVisibility(View.VISIBLE);
+//            FetchMoviesTask.NotifyAboutTaskCompletionCommand command =
+//                    new FetchMoviesTask.NotifyAboutTaskCompletionCommand(this.mRetainedFragment);
+//            new FetchMoviesTask(sortBy, command).execute();
+//        } else {
+//            Log.v("Luke", "fetchMovies~~~~~~~ initLoader");
+//            getSupportLoaderManager().initLoader(FLAG_LOADER, null, this);
+//        }
+//    }
 
     private void updateEmptyState() {
         if (mAdapter.getItemCount() == 0) {
-            if (mSortBy.equals(FetchMoviesTask.FAVORITES)) {
-                findViewById(R.id.empty_state_container).setVisibility(View.GONE);
-                findViewById(R.id.empty_state_favorites_container).setVisibility(View.VISIBLE);
-            } else {
-                findViewById(R.id.empty_state_container).setVisibility(View.VISIBLE);
-                findViewById(R.id.empty_state_favorites_container).setVisibility(View.GONE);
-            }
+            findViewById(R.id.empty_state_container).setVisibility(View.GONE);
+            findViewById(R.id.empty_state_favorites_container).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.empty_state_container).setVisibility(View.GONE);
             findViewById(R.id.empty_state_favorites_container).setVisibility(View.GONE);
@@ -350,7 +364,8 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setRetainInstance(true);
+            setRetainInstance(false);
+            setHasOptionsMenu(false);
         }
 
         @Override

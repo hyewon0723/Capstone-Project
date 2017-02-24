@@ -25,7 +25,11 @@ public class TravelogyDBHelper extends SQLiteOpenHelper {
                 TravelogyContract.PhotoEntry._ID + " INTEGER PRIMARY KEY," +
                 TravelogyContract.PhotoEntry.COLUMN_PHOTO_ID + " INTEGER NOT NULL, " +
                 TravelogyContract.PhotoEntry.COLUMN_PHOTO_TITLE + " TEXT NOT NULL, " +
-                TravelogyContract.PhotoEntry.COLUMN_PHOTO_PATH + " TEXT NOT NULL " +
+                TravelogyContract.PhotoEntry.COLUMN_PHOTO_PATH + " TEXT NOT NULL, " +
+                TravelogyContract.PhotoEntry.COLUMN_FLAG_KEY + " INTEGER NOT NULL, " +
+                // Set up the location column as a foreign key to flag table.
+                " FOREIGN KEY (" + TravelogyContract.PhotoEntry.COLUMN_FLAG_KEY + ") REFERENCES " +
+                TravelogyContract.FlagEntry.TABLE_NAME + " (" + TravelogyContract.FlagEntry._ID + ") " +
                 " );";
 
         final String SQL_CREATE_FLAG_TABLE = "CREATE TABLE " + TravelogyContract.FlagEntry.TABLE_NAME
@@ -34,7 +38,8 @@ public class TravelogyDBHelper extends SQLiteOpenHelper {
                 TravelogyContract.FlagEntry.COLUMN_FLAG_ID + " INTEGER NOT NULL, " +
                 TravelogyContract.FlagEntry.COLUMN_FLAG_TITLE + " TEXT NOT NULL, " +
                 TravelogyContract.FlagEntry.COLUMN_FLAG_POSTER_PATH + " TEXT NOT NULL, " +
-                TravelogyContract.FlagEntry.COLUMN_FLAG_BACKDROP_PATH + " TEXT NOT NULL " +
+                TravelogyContract.FlagEntry.COLUMN_FLAG_BACKDROP_PATH + " TEXT NOT NULL, " +
+                TravelogyContract.FlagEntry.COLUMN_FLAG_SETTING + " TEXT UNIQUE NOT NULL " +
                 " );";
 
 

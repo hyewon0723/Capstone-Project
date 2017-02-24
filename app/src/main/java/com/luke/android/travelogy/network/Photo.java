@@ -19,6 +19,8 @@ public class Photo implements Parcelable {
     private String mTitle;
     @SerializedName("path")
     private String mPhoto;
+    @SerializedName("flag_key")
+    private String mFlag;
 
 
 
@@ -26,10 +28,11 @@ public class Photo implements Parcelable {
     private Photo() {
     }
 
-    public Photo(long id, String title, String photo) {
+    public Photo(long id, String title, String photo, String key) {
         mId = id;
         mTitle = title;
         mPhoto = photo;
+        mFlag = key;
     }
 
     @Nullable
@@ -59,6 +62,7 @@ public class Photo implements Parcelable {
             photo.mId = source.readLong();
             photo.mTitle = source.readString();
             photo.mPhoto = source.readString();
+            photo.mFlag = source.readString();
             return photo;
         }
 
@@ -75,6 +79,7 @@ public class Photo implements Parcelable {
         parcel.writeLong(mId);
         parcel.writeString(mTitle);
         parcel.writeString(mPhoto);
+        parcel.writeString(mFlag);
     }
 
 

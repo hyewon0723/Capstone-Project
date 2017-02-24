@@ -5,15 +5,15 @@
     <string name="user_rating_movie">TMDb: %1$s/10</string>
     <string name="most_popular">Most popular</string>
     <string name="top_rated">Top rated</string>
-    <string name="title_for_empty_view">No movies</string>
+    <string name="title_for_empty_view">No Country Flag</string>
     <string name="text_for_empty_view">Possible internet connection is missing</string>
     <string name="release_date_missing">Release date is unknown</string>
     <string name="add_to_favorites">Mark as favorite</string>
     <string name="watch_trailer">Watch trailer</string>
     <string name="favorites">Favorites</string>
     <string name="remove_from_favorites">Remove from favorites</string>
-    <string name="title_for_empty_view_favorites">No movies</string>
-    <string name="text_for_empty_view_favorites">You can add here your favorite movies</string>
+    <string name="title_for_empty_view_favorites">No Country Flag</string>
+    <string name="text_for_empty_view_favorites">Please start adding countries you have visited </string>
     <string name="sort_by">Sort by</string>
     <string name="share_trailer">Share trailer</string>
     <string name="network_toast" translatable="true">Uh-oh! This app requires an internet connection</string>
@@ -22,4 +22,6 @@
     <string name="input_hint" translatable="false">United Kingdom</string>
     <string name="input_prefill" translatable="false">United Kingdom</string>
     <string name="title_activity_maps">Map</string>
+    <string name="widget_title">Travelogy (# of Photo)</string>
+    <string name="widget_description">The widget displays list of country name you have visited including number of photo taken</string>
 </resources>

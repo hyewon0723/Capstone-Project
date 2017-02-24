@@ -3,6 +3,7 @@ package com.luke.android.travelogy;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmNetworkManager;
@@ -90,8 +91,24 @@ public class TravelogyTaskService extends GcmTaskService {
         }
         else if (params.getTag().equals("addPhoto")) {
             String PhotoInput = params.getExtras().getString("name");
-            Log.v("Luke", "TravelogyTaskService onRunTask 2" + PhotoInput);
+            String flagName = params.getExtras().getString("flagName");
+            Log.v("Luke", "TravelogyTaskService onRunTask @@@@@@@@@@  @@@@@@@@@@  flagName: " + flagName );
+            long flagId = -1;
+            Cursor flagCursor = mContext.getContentResolver().query(
+                    TravelogyContract.FlagEntry.CONTENT_URI,
+                    new String[]{TravelogyContract.FlagEntry._ID},
+                    TravelogyContract.FlagEntry.COLUMN_FLAG_SETTING + " = ?",
+                    new String[]{flagName},
+                    null);
+
+            if (flagCursor.moveToFirst()) {
+                int locationIdIndex = flagCursor.getColumnIndex(TravelogyContract.FlagEntry._ID);
+                flagId = flagCursor.getLong(locationIdIndex);
+            }
+            Log.v("Luke", "TravelogyTaskService onRunTask @@@@@@@@@@  @@@@@@@@@@" + PhotoInput + " flagId "+flagId);
             ContentValues photoValues = new ContentValues();
+            photoValues.put(TravelogyContract.PhotoEntry.COLUMN_FLAG_KEY,
+                    flagId);
             photoValues.put(TravelogyContract.PhotoEntry.COLUMN_PHOTO_ID,
                     0);
             photoValues.put(TravelogyContract.PhotoEntry.COLUMN_PHOTO_TITLE,
@@ -130,6 +147,8 @@ public class TravelogyTaskService extends GcmTaskService {
                         countryCode.getString("alpha2Code"));
                 flagValues.put(TravelogyContract.FlagEntry.COLUMN_FLAG_BACKDROP_PATH,
                         countryCode.getString("alpha2Code"));
+                flagValues.put(TravelogyContract.FlagEntry.COLUMN_FLAG_SETTING,
+                        countryCode.getString("name"));
                 mContext.getContentResolver().insert(
                         TravelogyContract.FlagEntry.CONTENT_URI,
                         flagValues

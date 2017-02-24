@@ -50,10 +50,11 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListFra
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        Log.v("Luke","PhotoListActivity ++++ onCreate  savedInstanceState "+savedInstanceState);
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
-            arguments.putParcelable(PhotoListFragment.ARG_MOVIE,
-                    getIntent().getParcelableExtra(PhotoListFragment.ARG_MOVIE));
+            arguments.putParcelable(PhotoListFragment.ARG_FLAG,
+                    getIntent().getParcelableExtra(PhotoListFragment.ARG_FLAG));
             PhotoListFragment fragment = new PhotoListFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
