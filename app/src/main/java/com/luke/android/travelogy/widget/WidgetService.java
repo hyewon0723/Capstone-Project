@@ -60,12 +60,7 @@ class WidgetDataFactory implements RemoteViewsService.RemoteViewsFactory {
 
             String flagName = mCursor.getString(TravelogyContract.FlagEntry.COL_FLAG_TITLE);
             Log.v("Luke","WidgetService.getViewAt flagName: "+flagName);
-//            Cursor flagCursor = mContext.getContentResolver().query(
-//                    TravelogyContract.FlagEntry.CONTENT_URI,
-//                    new String[]{TravelogyContract.FlagEntry._ID},
-//                    TravelogyContract.FlagEntry.COLUMN_FLAG_SETTING + " = ?",
-//                    new String[]{flagName},
-//                    null);
+
             Cursor photoCursor = mContext.getContentResolver().query(TravelogyContract.PhotoEntry.buildPhotoUriByFlag(flagName),TravelogyContract.PhotoEntry.PHOTO_COLUMNS,
                     null,null,null);
             Log.v("Luke","WidgetService.getViewAt photoCursor.getCount(): "+photoCursor.getCount());

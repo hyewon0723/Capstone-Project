@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     tools:context="com.luke.android.travelogy.FlagListActivity">
 
+    <include layout="@layout/empty_state_photo" />
+
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/flag_list"

@@ -3,7 +3,9 @@ package com.luke.android.travelogy;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmNetworkManager;
@@ -32,8 +34,6 @@ public class TravelogyTaskService extends GcmTaskService {
     private OkHttpClient client = new OkHttpClient();
 
     private Context mContext;
-    private StringBuilder mStoredSymbols = new StringBuilder();
-    private boolean mIsUpdate;
 
     public TravelogyTaskService(Context context) {
         mContext = context;
@@ -60,6 +60,8 @@ public class TravelogyTaskService extends GcmTaskService {
     public int onRunTask(TaskParams params) {
 
         if (mContext == null) {
+            Intent intent = new Intent("myBroadcastIntent");
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             return GcmNetworkManager.RESULT_FAILURE;
         }
 
@@ -81,10 +83,13 @@ public class TravelogyTaskService extends GcmTaskService {
                 Log.v("Luke", "TravelogyTaskService #### urlString "+urlString);
                 try{
                     getResponse = fetchData(urlString);
+                    Log.v("Luke", "TravelogyTaskService #### received response ");
                     result = GcmNetworkManager.RESULT_SUCCESS;
                         ArrayList list = quoteJsonToContentVals(getResponse);
 
                 } catch (IOException e){
+                    Intent intent = new Intent("myBroadcastIntent");
+                    LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
                     e.printStackTrace();
                 }
             }
@@ -131,6 +136,7 @@ public class TravelogyTaskService extends GcmTaskService {
         JSONArray resultsArray = null;
         try{
             resultsArray = new JSONArray(JSON);
+            Log.v("Luke", "TravelogyTaskService #### start quoteJsonToContentVals ");
             Log.v("Luke", "TravelogyTaskService #### resultsArray.length()  "+resultsArray.length());
             if (resultsArray != null && resultsArray.length() != 0){
 
@@ -158,7 +164,14 @@ public class TravelogyTaskService extends GcmTaskService {
 
 
             }
+            else {
+                Intent intent = new Intent("myBroadcastIntent");
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+            }
         } catch (JSONException e){
+            Log.v("Luke", "TravelogyTaskService #### JSONException NOT FOUND !!!!! ");
+            Intent intent = new Intent("myBroadcastIntent");
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             Log.e(LOG_TAG, "String to JSON failed: " + e);
         }
         return batchOperations;

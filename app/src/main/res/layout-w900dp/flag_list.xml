@@ -35,7 +35,7 @@
 
         <include layout="@layout/empty_state_connection" />
 
-        <include layout="@layout/empty_state_favorites" />
+        <include layout="@layout/empty_state_flag" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -47,7 +47,7 @@
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/movie_detail_container"
+        android:id="@+id/photo_detail_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />

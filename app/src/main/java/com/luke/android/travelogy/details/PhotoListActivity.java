@@ -58,9 +58,11 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListFra
             PhotoListFragment fragment = new PhotoListFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.movie_detail_container, fragment)
+                    .add(R.id.photo_detail_container, fragment)
                     .commit();
         }
+
+
     }
 
     @Override
@@ -76,7 +78,6 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListFra
     public void passData(ArrayList<Location> list) {
         Log.v("Luke","PhotoListFragment ++++  passData list "+list.size());
         Intent intent=new Intent(this, MapsActivity.class);
-//        intent.putParcelableArrayListExtra("location", list);
         intent.putParcelableArrayListExtra("location", list);
         startActivity(intent);
     }

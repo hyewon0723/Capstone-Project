@@ -12,13 +12,20 @@
     <string name="watch_trailer">Watch trailer</string>
     <string name="favorites">Favorites</string>
     <string name="remove_from_favorites">Remove from favorites</string>
-    <string name="title_for_empty_view_favorites">No Country Flag</string>
-    <string name="text_for_empty_view_favorites">Please start adding countries you have visited </string>
+    <string name="title_for_empty_view_flag">No Country Flag</string>
+    <string name="text_for_empty_view_flag">Please start adding(+) countries you have visited </string>
+    <string name="title_for_empty_view_photo">No Photo </string>
+    <string name="text_for_empty_view_photo_por">Please start adding(+) Photo you took in this country </string>
+    <string name="text_for_empty_view_photo_land">Please start adding Photo you took in this country by selecting option menu on the top-right corner</string>
     <string name="sort_by">Sort by</string>
-    <string name="share_trailer">Share trailer</string>
+    <string name="map_title">map</string>
     <string name="network_toast" translatable="true">Uh-oh! This app requires an internet connection</string>
     <string name="title_dialog" translatable="true">Country Search</string>
-    <string name="content_test" translatable="true">Search for a Country Name</string>
+    <string name="content_fab" translatable="true">Search for a Country Name</string>
+    <string name="error_existing" translatable="true">Country Flag is already exist in your list</string>
+    <string name="error_notfound" translatable="true">Country name is not found in our Database. Please check your name again.</string>
+    <string name="error_location" translatable="true">No Location data is found from your photo.</string>
+    <string name="error_permission" translatable="true">Unable to retrieve location from your photo library. Please check photo library permission.</string>
     <string name="input_hint" translatable="false">United Kingdom</string>
     <string name="input_prefill" translatable="false">United Kingdom</string>
     <string name="title_activity_maps">Map</string>

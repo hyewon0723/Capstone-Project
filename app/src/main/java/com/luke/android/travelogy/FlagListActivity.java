@@ -21,7 +21,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
@@ -52,7 +51,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
     private boolean mTwoPane;
     private RetainedFragment mRetainedFragment;
     private FlagListAdapter mAdapter;
-    private String mSortBy = FetchMoviesTask.MOST_POPULAR;
     private Intent mServiceIntent;
     private Context mContext;
 
@@ -70,8 +68,10 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                //Handle wrong symbol.
-                //Toast.makeText(getApplicationContext(),"test", Toast.LENGTH_LONG).show();
+                String action = intent.getAction();
+                Log.v("Luke","FlagListActivity ++++ BroadcastReceiver  onReceive action: "+action);
+                Toast.makeText(getApplicationContext(),R.string.error_notfound, Toast.LENGTH_LONG).show();
+
             }
         };
 
@@ -102,7 +102,7 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         mRecyclerView.setAdapter(mAdapter);
 
         // For large-screen layouts (res/values-w900dp).
-        mTwoPane = findViewById(R.id.movie_detail_container) != null;
+        mTwoPane = findViewById(R.id.photo_detail_container) != null;
         Log.v("Luke","FlagListActivity ++++ onCreate  mTwoPane "+mTwoPane);
         if (!mTwoPane) {
             //tag = PhotoListFragment.class.getName();
@@ -115,23 +115,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
 
 
 
-//        if (savedInstanceState != null) {
-//            mSortBy = savedInstanceState.getString(EXTRA_SORT_BY);
-//            if (savedInstanceState.containsKey(EXTRA_MOVIES)) {
-//                List<Flag> movies = savedInstanceState.getParcelableArrayList(EXTRA_MOVIES);
-//                mAdapter.add(movies);
-//                findViewById(R.id.progress).setVisibility(View.GONE);
-//
-//                // For listening content updates for tow pane mode
-//                if (mSortBy.equals(FetchMoviesTask.FAVORITES)) {
-//                    getSupportLoaderManager().initLoader(FAVORITE_MOVIES_LOADER, null, this);
-//                }
-//            }
-//            updateEmptyState();
-//        } else {
-//            // Fetch Flags only if savedInstanceState == null
-//            fetchMovies(mSortBy);
-//        }
 
         Loader loader = getSupportLoaderManager().getLoader(FLAG_LOADER);
         Log.v("Luke","FlagListActivity fab!!!! loader: "+loader);
@@ -149,34 +132,28 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
             @Override public void onClick(View v) {
                 if (isConnected()){
                     new MaterialDialog.Builder(mContext).title(R.string.title_dialog)
-                            .content(R.string.content_test)
+                            .content(R.string.content_fab)
                             .inputType(InputType.TYPE_CLASS_TEXT)
                             .input(R.string.input_hint, R.string.input_prefill, new MaterialDialog.InputCallback() {
                                 @Override public void onInput(MaterialDialog dialog, CharSequence input) {
-                                    // On FAB click, receive user input. Make sure the stock doesn't already exist
+
+
                                     // in the DB and proceed accordingly
-//                                    Cursor c = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
-//                                            new String[] { QuoteColumns.SYMBOL }, QuoteColumns.SYMBOL + "= ?",
-//                                            new String[] { input.toString() }, null);
-//
-//                                    if (c.getCount() != 0) {
-//                                        Toast toast =
-//                                                Toast.makeText(MyStocksActivity.this, R.string.saved_msg,
-//                                                        Toast.LENGTH_LONG);
-//                                        toast.setGravity(Gravity.CENTER, Gravity.CENTER, 0);
-//                                        toast.show();
-//                                        return;
-//                                    } else {
-//                                        // Add the stock to DB
-//                                        mServiceIntent.putExtra("tag", "add");
-//                                        mServiceIntent.putExtra("symbol", input.toString());
-//                                        startService(mServiceIntent);
-//                                    }
-                                    Log.v("Luke","FlagListActivity fab!!!! country name: "+input.toString());
-                                    mServiceIntent.putExtra("tag", "add");
-                                    mServiceIntent.putExtra("name", input.toString());
-                                    startService(mServiceIntent);
-                                    Log.v("Luke","FlagListActivity fab!!!! ending country name: "+input.toString());
+
+
+                                    Cursor flagCursor = mContext.getContentResolver().query( TravelogyContract.FlagEntry.CONTENT_URI,new String[]{TravelogyContract.FlagEntry._ID},
+                                    TravelogyContract.FlagEntry.COLUMN_FLAG_SETTING + " = ?", new String[]{input.toString()}, null);
+                                    Log.v("Luke","FlagListActivity fab!!!! country name: "+input.toString() +" count: "+ flagCursor.getCount());
+                                    if (flagCursor.getCount() == 0) {
+                                        mServiceIntent.putExtra("tag", "add");
+                                        mServiceIntent.putExtra("name", input.toString());
+                                        startService(mServiceIntent);
+                                        Log.v("Luke","FlagListActivity fab!!!! ending country name: "+input.toString());
+                                    }
+                                    else {
+                                        Toast.makeText(getApplicationContext(),R.string.error_existing, Toast.LENGTH_LONG).show();
+                                    }
+
 
                                 }
                             })
@@ -191,24 +168,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
 
 
 
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-////        ArrayList<Flag> movies = mAdapter.getMovies();
-////        if (movies != null && !movies.isEmpty()) {
-////            outState.putParcelableArrayList(EXTRA_MOVIES, movies);
-////        }
-////        outState.putString(EXTRA_SORT_BY, mSortBy);
-////
-////        // Needed to avoid confusion, when we back from detail screen (i. e. top rated selected but
-////        // favorite movies are shown and onCreate was not called in this case).
-////        if (!mSortBy.equals(FetchMoviesTask.FAVORITES)) {
-////            getSupportLoaderManager().destroyLoader(FAVORITE_MOVIES_LOADER);
-////        }
-//        Log.v("Luke", "FlagListAcitivty DestryLoader~~~~~~~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-////        getSupportLoaderManager().destroyLoader(FLAG_LOADER);
-//    }
-
 
     public boolean isConnected() {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -220,54 +179,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         Toast.makeText(mContext, getString(R.string.network_toast), Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Log.v("Luke", "FlagListActivity.onCreateOptionsMenu~~~~~~~!!!!!!!");
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.movie_list_activity, menu);
-//
-//        switch (mSortBy) {
-//            case FetchMoviesTask.MOST_POPULAR:
-//                menu.findItem(R.id.sort_by_most_popular).setChecked(true);
-//                break;
-//            case FetchMoviesTask.TOP_RATED:
-//                menu.findItem(R.id.sort_by_top_rated).setChecked(true);
-//                break;
-//            case FetchMoviesTask.FAVORITES:
-//                menu.findItem(R.id.sort_by_favorites).setChecked(true);
-//                break;
-//        }
-        return true;
-    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.sort_by_top_rated:
-//                if (mSortBy.equals(FetchMoviesTask.FAVORITES)) {
-//                    getSupportLoaderManager().destroyLoader(FAVORITE_MOVIES_LOADER);
-//                }
-//                mSortBy = FetchMoviesTask.TOP_RATED;
-//                fetchMovies(mSortBy);
-//                item.setChecked(true);
-//                break;
-//            case R.id.sort_by_most_popular:
-//                if (mSortBy.equals(FetchMoviesTask.FAVORITES)) {
-//                    getSupportLoaderManager().destroyLoader(FAVORITE_MOVIES_LOADER);
-//                }
-//                mSortBy = FetchMoviesTask.MOST_POPULAR;
-//                fetchMovies(mSortBy);
-//                item.setChecked(true);
-//                break;
-//            case R.id.sort_by_favorites:
-//                mSortBy = FetchMoviesTask.FAVORITES;
-//                item.setChecked(true);
-//                fetchMovies(mSortBy);
-//            default:
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public void open(Flag flag, int position) {
@@ -277,7 +188,7 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
             PhotoListFragment fragment = new PhotoListFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.movie_detail_container, fragment,"fragment_tag_String")
+                    .replace(R.id.photo_detail_container, fragment,"fragment_tag_String")
                     .commit();
         } else {
             Intent intent = new Intent(this, PhotoListActivity.class);
@@ -319,25 +230,17 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         // Not used
     }
 
-//    private void fetchMovies(String sortBy) {
-//        if (!sortBy.equals(FetchMoviesTask.FAVORITES)) {
-//            findViewById(R.id.progress).setVisibility(View.VISIBLE);
-//            FetchMoviesTask.NotifyAboutTaskCompletionCommand command =
-//                    new FetchMoviesTask.NotifyAboutTaskCompletionCommand(this.mRetainedFragment);
-//            new FetchMoviesTask(sortBy, command).execute();
-//        } else {
-//            Log.v("Luke", "fetchMovies~~~~~~~ initLoader");
-//            getSupportLoaderManager().initLoader(FLAG_LOADER, null, this);
-//        }
-//    }
+
 
     private void updateEmptyState() {
+
+        Log.v("Luke","FlaglistActivity ###  updateEmptyState(R.id.empty_state_flag_container) "+findViewById(R.id.empty_state_flag_container));
         if (mAdapter.getItemCount() == 0) {
             findViewById(R.id.empty_state_container).setVisibility(View.GONE);
-            findViewById(R.id.empty_state_favorites_container).setVisibility(View.VISIBLE);
+            findViewById(R.id.empty_state_flag_container).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.empty_state_container).setVisibility(View.GONE);
-            findViewById(R.id.empty_state_favorites_container).setVisibility(View.GONE);
+            findViewById(R.id.empty_state_flag_container).setVisibility(View.GONE);
         }
     }
 

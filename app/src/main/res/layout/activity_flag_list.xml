@@ -33,7 +33,7 @@
 
     <include layout="@layout/empty_state_connection" />
 
-    <include layout="@layout/empty_state_favorites" />
+    <include layout="@layout/empty_state_flag" />
 
     <ProgressBar
         android:id="@+id/progress"

@@ -9,6 +9,9 @@
     tools:context=".details.PhotoListActivity"
     tools:ignore="MergeRootFrame">
 
+    <include layout="@layout/empty_state_connection" />
+    <include layout="@layout/empty_state_photo" />
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -44,7 +47,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/movie_detail_container"
+        android:id="@+id/photo_detail_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -66,5 +69,4 @@
         fab:fab_type="normal"
         fab:layout_anchorGravity="bottom|right|end"
         />
-
 </android.support.design.widget.CoordinatorLayout>
