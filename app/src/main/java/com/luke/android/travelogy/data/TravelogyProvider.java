@@ -11,7 +11,6 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 public class TravelogyProvider extends ContentProvider {
 
@@ -126,7 +125,6 @@ public class TravelogyProvider extends ContentProvider {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         Uri returnUri;
-        Log.v("Luke", "TP Insert~~~~~~~ START ");
         switch (match) {
             case FLAGS: {
                 long id = db.insert(TravelogyContract.FlagEntry.TABLE_NAME, null, values);
@@ -149,9 +147,7 @@ public class TravelogyProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-        Log.v("Luke", "TP Insert~~~~~~~ "+getContext() + " uri "+uri);
         if (getContext() != null) {
-            Log.v("Luke", "TP Insert~~~~~~~ notifying!!!!!!");
             getContext().getContentResolver().notifyChange(uri, null);
         }
         return returnUri;

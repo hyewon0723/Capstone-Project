@@ -10,9 +10,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Photo implements Parcelable {
 
-    public static final String LOG_TAG = Photo.class.getSimpleName();
-    public static final float POSTER_ASPECT_RATIO = 0.50f;
-
     @SerializedName("id")
     private long mId;
     @SerializedName("title")
@@ -81,6 +78,5 @@ public class Photo implements Parcelable {
         parcel.writeString(mPhoto);
         parcel.writeString(mFlag);
     }
-
 
 }

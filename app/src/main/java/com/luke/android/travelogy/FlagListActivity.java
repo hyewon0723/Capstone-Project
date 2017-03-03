@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -40,8 +39,7 @@ import butterknife.ButterKnife;
  * An activity representing a grid of Flags. This activity
  * has different presentations for handset and tablet-size devices.
  */
-public class FlagListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
-        FetchMoviesTask.Listener, FlagListAdapter.Callbacks {
+public class FlagListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, FlagListAdapter.Callbacks {
 
     private static final int FLAG_LOADER = 0;
     /**
@@ -49,7 +47,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
      * device.
      */
     private boolean mTwoPane;
-    private RetainedFragment mRetainedFragment;
     private FlagListAdapter mAdapter;
     private Intent mServiceIntent;
     private Context mContext;
@@ -86,13 +83,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         mToolbar.setTitle(R.string.title_flag_list);
         setSupportActionBar(mToolbar);
         mServiceIntent = new Intent(this, TravelogyIntentService.class);
-        String tag = RetainedFragment.class.getName();
-        this.mRetainedFragment = (RetainedFragment) getSupportFragmentManager().findFragmentByTag(tag);
-        if (this.mRetainedFragment == null) {
-            this.mRetainedFragment = new RetainedFragment();
-            this.mRetainedFragment.setHasOptionsMenu(false);
-            getSupportFragmentManager().beginTransaction().add(this.mRetainedFragment, tag).commit();
-        }
 
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, getResources()
@@ -197,14 +187,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         }
     }
 
-    @Override
-    public void onFetchFinished(Command command) {
-        if (command instanceof FetchMoviesTask.NotifyAboutTaskCompletionCommand) {
-            Log.v("Luke", "onFetchFinished~~~~~~~");
-            mAdapter.add(((FetchMoviesTask.NotifyAboutTaskCompletionCommand) command).getMovies());
-            updateEmptyState();
-        }
-    }
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
@@ -241,61 +223,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         } else {
             findViewById(R.id.empty_state_container).setVisibility(View.GONE);
             findViewById(R.id.empty_state_flag_container).setVisibility(View.GONE);
-        }
-    }
-
-    /**
-     * RetainedFragment with saving state mechanism.
-     * The saving state mechanism helps to not lose user's progress even when app is in the
-     * background state or user rotate device and also to avoid performing code which
-     * will lead to "java.lang.IllegalStateException: Can not perform some actions after
-     * onSaveInstanceState". As the result we have commands which we cannot execute now,
-     * but we have to store it and execute later.
-     *
-     * @see com.luke.android.travelogy.FetchMoviesTask.NotifyAboutTaskCompletionCommand
-     */
-    public static class RetainedFragment extends Fragment implements FetchMoviesTask.Listener {
-
-        private boolean mPaused = false;
-        // Currently allow to wait one command, because more is not needed. In future it can be
-        // extended to list etc. Using "MacroCommand" which contain includes other commands as waiting command.
-        private Command mWaitingCommand = null;
-
-        public RetainedFragment() {
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setRetainInstance(false);
-            setHasOptionsMenu(false);
-        }
-
-        @Override
-        public void onPause() {
-            super.onPause();
-            mPaused = true;
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            mPaused = false;
-            if (mWaitingCommand != null) {
-                onFetchFinished(mWaitingCommand);
-            }
-        }
-
-        @Override
-        public void onFetchFinished(Command command) {
-            if (getActivity() instanceof FetchMoviesTask.Listener && !mPaused) {
-                FetchMoviesTask.Listener listener = (FetchMoviesTask.Listener) getActivity();
-                listener.onFetchFinished(command);
-                mWaitingCommand = null;
-            } else {
-                // Save the command for later.
-                mWaitingCommand = command;
-            }
         }
     }
 }
