@@ -70,7 +70,7 @@ public class TravelogyTaskService extends GcmTaskService {
         if (params.getTag().equals("add")) {
             // get symbol from params.getExtra and build query
             String flagInput = params.getExtras().getString("name");
-            Log.v("Luke", "TravelogyTaskService onRunTask 1" + flagInput);
+
             StringBuilder urlStringBuilder = new StringBuilder();
             urlStringBuilder.append("https://restcountries.eu/rest/v1/name/"+flagInput);
 
@@ -80,10 +80,9 @@ public class TravelogyTaskService extends GcmTaskService {
             if (urlStringBuilder != null){
 
                 urlString = urlStringBuilder.toString();
-                Log.v("Luke", "TravelogyTaskService #### urlString "+urlString);
                 try{
                     getResponse = fetchData(urlString);
-                    Log.v("Luke", "TravelogyTaskService #### received response ");
+
                     result = GcmNetworkManager.RESULT_SUCCESS;
                         ArrayList list = quoteJsonToContentVals(getResponse);
 
@@ -97,7 +96,7 @@ public class TravelogyTaskService extends GcmTaskService {
         else if (params.getTag().equals("addPhoto")) {
             String PhotoInput = params.getExtras().getString("name");
             String flagName = params.getExtras().getString("flagName");
-            Log.v("Luke", "TravelogyTaskService onRunTask @@@@@@@@@@  @@@@@@@@@@  flagName: " + flagName );
+
             long flagId = -1;
             Cursor flagCursor = mContext.getContentResolver().query(
                     TravelogyContract.FlagEntry.CONTENT_URI,
@@ -110,7 +109,7 @@ public class TravelogyTaskService extends GcmTaskService {
                 int locationIdIndex = flagCursor.getColumnIndex(TravelogyContract.FlagEntry._ID);
                 flagId = flagCursor.getLong(locationIdIndex);
             }
-            Log.v("Luke", "TravelogyTaskService onRunTask @@@@@@@@@@  @@@@@@@@@@" + PhotoInput + " flagId "+flagId);
+
             ContentValues photoValues = new ContentValues();
             photoValues.put(TravelogyContract.PhotoEntry.COLUMN_FLAG_KEY,
                     flagId);
@@ -136,13 +135,11 @@ public class TravelogyTaskService extends GcmTaskService {
         JSONArray resultsArray = null;
         try{
             resultsArray = new JSONArray(JSON);
-            Log.v("Luke", "TravelogyTaskService #### start quoteJsonToContentVals ");
-            Log.v("Luke", "TravelogyTaskService #### resultsArray.length()  "+resultsArray.length());
+
             if (resultsArray != null && resultsArray.length() != 0){
 
                 JSONObject countryCode = resultsArray.getJSONObject(0);
-                Log.v("Luke", "TravelogyTaskService #### countryCode.getString(\"name\")  "+countryCode.getString("name"));
-                Log.v("Luke", "TravelogyTaskService #### countryCode.getString(\"alpha2Code\")  "+countryCode.getString("alpha2Code"));
+
 
                 ContentValues flagValues = new ContentValues();
                 flagValues.put(TravelogyContract.FlagEntry.COLUMN_FLAG_ID,
@@ -160,16 +157,12 @@ public class TravelogyTaskService extends GcmTaskService {
                         flagValues
                 );
 
-                Log.v("Luke", "TravelogyTaskService #### mContextInSERTED !!!!! ");
-
-
             }
             else {
                 Intent intent = new Intent("myBroadcastIntent");
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             }
         } catch (JSONException e){
-            Log.v("Luke", "TravelogyTaskService #### JSONException NOT FOUND !!!!! ");
             Intent intent = new Intent("myBroadcastIntent");
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             Log.e(LOG_TAG, "String to JSON failed: " + e);

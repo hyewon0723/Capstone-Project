@@ -19,7 +19,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -65,8 +64,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                Log.v("Luke","FlagListActivity ++++ BroadcastReceiver  onReceive action: "+action);
                 Toast.makeText(getApplicationContext(),R.string.error_notfound, Toast.LENGTH_LONG).show();
 
             }
@@ -93,21 +90,15 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
 
         // For large-screen layouts (res/values-w900dp).
         mTwoPane = findViewById(R.id.photo_detail_container) != null;
-        Log.v("Luke","FlagListActivity ++++ onCreate  mTwoPane "+mTwoPane);
         if (!mTwoPane) {
             //tag = PhotoListFragment.class.getName();
             PhotoListFragment fragment = (PhotoListFragment) getSupportFragmentManager().findFragmentByTag("fragment_tag_String");
-            Log.v("Luke","FlagListActivity ++++ onCreate  fragment "+fragment);
             if (fragment != null) {
                 getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             }
         }
 
-
-
-
         Loader loader = getSupportLoaderManager().getLoader(FLAG_LOADER);
-        Log.v("Luke","FlagListActivity fab!!!! loader: "+loader);
         if (loader != null) {
             getSupportLoaderManager().destroyLoader(FLAG_LOADER);
             getSupportLoaderManager().restartLoader(FLAG_LOADER, null, this);
@@ -133,12 +124,10 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
 
                                     Cursor flagCursor = mContext.getContentResolver().query( TravelogyContract.FlagEntry.CONTENT_URI,new String[]{TravelogyContract.FlagEntry._ID},
                                     TravelogyContract.FlagEntry.COLUMN_FLAG_SETTING + " = ?", new String[]{input.toString()}, null);
-                                    Log.v("Luke","FlagListActivity fab!!!! country name: "+input.toString() +" count: "+ flagCursor.getCount());
                                     if (flagCursor.getCount() == 0) {
                                         mServiceIntent.putExtra("tag", "add");
                                         mServiceIntent.putExtra("name", input.toString());
                                         startService(mServiceIntent);
-                                        Log.v("Luke","FlagListActivity fab!!!! ending country name: "+input.toString());
                                     }
                                     else {
                                         Toast.makeText(getApplicationContext(),R.string.error_existing, Toast.LENGTH_LONG).show();
@@ -190,7 +179,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        Log.v("Luke", "onLoadFinished~~~~~~~");
         mAdapter.add(cursor);
         updateEmptyState();
 
@@ -198,7 +186,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        Log.v("Luke", "FlagListActivity.onCreateLoader~~~~~~~ URI "+TravelogyContract.FlagEntry.CONTENT_URI);
         return new CursorLoader(this,
                 TravelogyContract.FlagEntry.CONTENT_URI,
                 TravelogyContract.FlagEntry.FLAG_COLUMNS,
@@ -215,8 +202,6 @@ public class FlagListActivity extends AppCompatActivity implements LoaderManager
 
 
     private void updateEmptyState() {
-
-        Log.v("Luke","FlaglistActivity ###  updateEmptyState(R.id.empty_state_flag_container) "+findViewById(R.id.empty_state_flag_container));
         if (mAdapter.getItemCount() == 0) {
             findViewById(R.id.empty_state_container).setVisibility(View.GONE);
             findViewById(R.id.empty_state_flag_container).setVisibility(View.VISIBLE);

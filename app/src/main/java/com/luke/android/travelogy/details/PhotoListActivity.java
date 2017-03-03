@@ -50,7 +50,6 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListFra
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        Log.v("Luke","PhotoListActivity ++++ onCreate  savedInstanceState "+savedInstanceState);
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
             arguments.putParcelable(PhotoListFragment.ARG_FLAG,
@@ -67,7 +66,6 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListFra
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.v("Luke","PhotoListActivity ++++  onOptionsItemSelected item.getItemId()  "+item.getItemId() );
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
@@ -76,7 +74,6 @@ public class PhotoListActivity extends AppCompatActivity implements PhotoListFra
     }
 
     public void passData(ArrayList<Location> list) {
-        Log.v("Luke","PhotoListFragment ++++  passData list "+list.size());
         Intent intent=new Intent(this, MapsActivity.class);
         intent.putParcelableArrayListExtra("location", list);
         startActivity(intent);

@@ -78,7 +78,6 @@ public class PhotoListAdapter
         String posterUrl = photo.getPosterUrl(context);
         // Warning: onError() will not be called, if url is null.
         // Empty url leads to app crash.
-        Log.v("LUke", "PhotolistAdapter.onBinderViewHOlder posterUrl:"+posterUrl);
         if (posterUrl == null) {
             holder.mTitleView.setVisibility(View.VISIBLE);
         }
@@ -148,14 +147,12 @@ public class PhotoListAdapter
     }
 
     public void add(Cursor cursor) {
-        Log.v("Luke", "PhotoList Adapter.add cursor: "+cursor);
         mPhotos.clear();
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 long id = cursor.getLong(TravelogyContract.PhotoEntry.COL_PHOTO_ID);
                 String title = cursor.getString(TravelogyContract.PhotoEntry.COL_PHOTO_TITLE);
                 String path = cursor.getString(TravelogyContract.PhotoEntry.COL_PHOTO_PATH);
-                Log.v("Luke", "PhotoList Adapter.add path: "+path);
                 String flag_key = cursor.getString(TravelogyContract.PhotoEntry.COL_PHOTO_FLAG_KEY);
                 Photo photo = new Photo(id, title, path, flag_key);
                 mPhotos.add(photo);

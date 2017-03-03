@@ -18,7 +18,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -128,7 +127,6 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
             FloatingActionButton fab = (FloatingActionButton) activity.findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    Log.v("Luke", "PhotoListFragment fab!!!!!! ");
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -147,10 +145,8 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Log.v("Luke", "PhotoListFragment onActivityResult!!!!!! ");
             Uri uri = data.getData();
 
-            Log.v("Luke","PhotoListFragment onActivityResult!!!! country name: "+uri.toString());
             mServiceIntent.putExtra("tag", "addPhoto");
             mServiceIntent.putExtra("name", uri.toString());
             mServiceIntent.putExtra("flagName", mFlag.getTitle());
@@ -163,20 +159,12 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.photo_detail, container, false);
         ButterKnife.bind(this, rootView);
-        Log.v("Luke","PhotoListFragment ### onCreateView rootView.findViewById(R.id.empty_state_flag_container) "+rootView.findViewById(R.id.empty_state_flag_container));
-
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        // To avoid "E/RecyclerView: No adapter attached; skipping layout"
         mAdapter = new PhotoListAdapter(new ArrayList<Photo>(), this);
         mRecyclerView.setAdapter(mAdapter);
 
-        // For horizontal list of trailers
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-
         Loader loader = getLoaderManager().getLoader(PHOTO_LIST_LOADER);
-        Log.v("Luke","PhogoListFragment.onActivityCreated loader: "+loader);
         if (loader != null) {
             getLoaderManager().destroyLoader(PHOTO_LIST_LOADER);
             getLoaderManager().restartLoader(PHOTO_LIST_LOADER, null, this);
@@ -189,19 +177,15 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.v("Luke", "PhotoListFragment DestryLoader~~~~~~~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         PhotoListFragment fragment = (PhotoListFragment) getFragmentManager().findFragmentByTag("fragment_tag_String");
-        Log.v("Luke", "PhotoListFragment onCreateOptionsMenu~~~~~~~!!!!!!!!!!!!!!!!!!!  fragment? "+fragment);
         inflater.inflate(R.menu.flag_detail_fragment, menu);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected item.getItemId()  "+item.getItemId() );
-        Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected calling passData ");
         switch(item.getItemId()) {
             case R.id.map_portrait:
             case R.id.map_landscape:
@@ -211,11 +195,9 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
                 for (int i = 0 ; i < photoList.size(); ++i) {
 
                     Uri uri = Uri.parse(photoList.get(i).getPoster());
-                    Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected calling passData uri.getPath() "+uri.getPath());
                     try {
                         String filePath = getRealPathFromURI(uri);
                         mLocations.add(readGeoTagImage(filePath));
-                        Log.v("Luke","PhotoListFragment ++++  onOptionsItemSelected realfilePath "+filePath);
                         if (mLocations.size() == 0) {
                             Toast.makeText(getContext(),R.string.error_location, Toast.LENGTH_LONG).show();
                         }
@@ -231,7 +213,6 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
                 break;
 
             case R.id.photo_landscape:
-                Log.v("Luke", "PhotoListFragment optionmenuselected!!!!!! ");
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -249,22 +230,16 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        Log.v("Luke", "PhotoList Fragment onLoadFinished~~~~~~~**");
         mAdapter = new PhotoListAdapter(new ArrayList<Photo>(), this);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.add(cursor);
         updateEmptyState();
-        Log.v("Luke", "PhotoList Fragment onLoadFinished~~~~~~***count: "+mAdapter.getItemCount());
-
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        Log.v("Luke", "PhotoList Fragment onCreateLoader~~~~~~~");
 
         Uri photoByFlag = TravelogyContract.PhotoEntry.buildPhotoUriByFlag(mFlag.getTitle());
-        Log.v("Luke", "PhotoList Fragment onCreateLoader~~~~~~~   "+photoByFlag);
-
 
         return new CursorLoader(getContext(),
                 photoByFlag,
@@ -280,7 +255,6 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     private void updateEmptyState() {
-        Log.v("Luke","PhotoListFragment ### updateEmptyState activity.findViewById(R.id.empty_state_flag_container) "+activity.findViewById(R.id.empty_state_flag_container));
             if (activity.findViewById(R.id.empty_state_photo_container) != null) {
                 if (mAdapter.getItemCount() == 0) {
                     activity.findViewById(R.id.empty_state_photo_container).setVisibility(View.VISIBLE);
@@ -300,7 +274,6 @@ public class PhotoListFragment extends Fragment implements LoaderManager.LoaderC
             if(exif.getLatLong(latlong)){
                 loc.setLatitude(latlong[0]);
                 loc.setLongitude(latlong[1]);
-                Log.v("Luke","PhotoListFragment ++++  readGeoTagImage latlong[0] "+latlong[0] + " latlong[1] "+latlong[1]);
             }
 
         } catch (IOException e) {

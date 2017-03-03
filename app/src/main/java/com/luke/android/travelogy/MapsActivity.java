@@ -4,7 +4,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,7 +24,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         myList = getIntent().getParcelableArrayListExtra("location");
-        Log.v("Luke","MapsActivity ++++  getParcelableExtra myList"+myList);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         ActionBar actionBar = getSupportActionBar();
@@ -70,7 +68,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.v("Luke","MapsActivity ++++  onOptionsItemSelected item.getItemId()  "+item.getItemId() );
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;

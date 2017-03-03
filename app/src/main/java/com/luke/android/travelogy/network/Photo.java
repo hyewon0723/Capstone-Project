@@ -20,8 +20,6 @@ public class Photo implements Parcelable {
     private String mFlag;
 
 
-
-    // Only for createFromParcel
     private Photo() {
     }
 
