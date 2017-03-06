@@ -31,4 +31,10 @@
     <string name="title_activity_maps">Map</string>
     <string name="widget_title">Travelogy (# of Photo)</string>
     <string name="widget_description">The widget displays list of country name you have visited including number of photo taken</string>
+    <string name="empty_connection_state">icon for empty state</string>
+    <string name="empty_flag_state">icon for empty flag state</string>
+    <string name="empty_photo_state">icon for empty photo state</string>
+    <string name="flag_image">actual flag image</string>
+    <string name="photo_image">actual photo image</string>
+    <string name="backdrop_image">backdrop photo image</string>
 </resources>
