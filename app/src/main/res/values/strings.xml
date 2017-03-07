@@ -37,4 +37,5 @@
     <string name="flag_image">actual flag image</string>
     <string name="photo_image">actual photo image</string>
     <string name="backdrop_image">backdrop photo image</string>
+    <string name="fab">fab to add flag or photo</string>
 </resources>

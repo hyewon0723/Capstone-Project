@@ -1,5 +1,15 @@
 apply plugin: 'com.android.application'
 
+// Create a variable called keystorePropertiesFile, and initialize it to your
+// keystore.properties file, in the rootProject folder.
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+
+// Initialize a new Properties() object called keystoreProperties.
+def keystoreProperties = new Properties()
+
+// Load your keystore.properties file into the keystoreProperties object.
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion 24
     buildToolsVersion "23.0.2"
@@ -15,9 +25,18 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        release {
+            storeFile file("my-release-key.jks")
+            storePassword "password"
+            keyAlias "my-alias"
+            keyPassword "password"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,9 +50,6 @@ android {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
-    buildTypes.each {
-        it.buildConfigField 'String', 'THE_MOVIE_DATABASE_API_KEY', TheMovieDatabasepApiKey
-    }
 }
 
 repositories {
@@ -53,13 +69,11 @@ dependencies {
     compile 'com.android.support:support-v4:24.0.0'
     compile 'com.android.support:design:24.0.0'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.squareup.retrofit2:retrofit:2.0.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0'
     compile 'com.google.android.gms:play-services-gcm:9.8.0'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'net.simonvt.schematic:schematic:0.6.3'
     compile 'com.android.support:gridlayout-v7:24.0.0'
-    compile 'com.android.volley:volley:1.0.0'
-    compile 'com.google.android.gms:play-services:9.8.0'
+    compile 'com.google.android.gms:play-services-maps:9.8.0'
     testCompile 'junit:junit:4.12'
 }

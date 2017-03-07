@@ -7,4 +7,5 @@
     <color name="text_color_for_movie_overview">@android:color/black</color>
     <color name="text_color_for_review_content">@android:color/black</color>
     <color name="red">#F44336</color>
+    <color name="fab">#FF99DEF5</color>
 </resources>
